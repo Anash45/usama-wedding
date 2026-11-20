@@ -104,7 +104,7 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .fn::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--jo,.35);
   background:radial-gradient(circle,var(--accent) 1.2px,transparent 1.6px) 0 0/30px 30px;mix-blend-mode:soft-light}
 .mehndi{--bg:#fff1b8;--bg2:#ffdf6e;--ink:#2d3a14;--accent:#1c6b34;--accent2:#d6336c;--line:rgba(28,107,52,.35);--card:rgba(255,255,255,.55);--petal:#f28c1c;--prev:#22102a;--henna:#6a3418}
-.rukhsati{--bg:#5c0b18;--bg2:#8a1425;--ink:#fbe9c9;--accent:#e6b85c;--accent2:#ff9aa2;--line:rgba(230,184,92,.4);--card:rgba(0,0,0,.24);--petal:#e6b85c;--prev:#fff1b8;--jo:.25}
+.baraat{--bg:#5c0b18;--bg2:#8a1425;--ink:#fbe9c9;--accent:#e6b85c;--accent2:#ff9aa2;--line:rgba(230,184,92,.4);--card:rgba(0,0,0,.24);--petal:#e6b85c;--prev:#fff1b8;--jo:.25}
 .walima{--bg:#e6f2ed;--bg2:#fbece8;--ink:#0f3d38;--accent:#0e6b5e;--accent2:#c9857a;--line:rgba(14,107,94,.3);--card:rgba(255,255,255,.7);--petal:#e7a4a0;--prev:#5c0b18}
 .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(34px,6vw,84px);align-items:center;max-width:1080px;margin-inline:auto}
 .rev .art{order:2}
@@ -113,7 +113,7 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .eyebrow{color:var(--accent2);margin:0 0 4px}
 .fn h2{font:clamp(78px,15vw,128px)/1.15 var(--script);margin:0 0 4px;padding:.06em .18em .12em;margin-left:-.18em;width:fit-content;max-width:100%;
   background:linear-gradient(95deg,var(--accent),var(--accent2) 60%,var(--accent));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
-.rukhsati h2{background-image:linear-gradient(100deg,#c98f2b 20%,#fff0b8 45%,#c98f2b 70%);background-size:250% 100%}
+.baraat h2{background-image:linear-gradient(100deg,#c98f2b 20%,#fff0b8 45%,#c98f2b 70%);background-size:250% 100%}
 .tag{font-style:italic;font-size:1.25em;margin:0 0 22px;max-width:30em}
 .date{display:flex;align-items:center;gap:18px;margin-bottom:24px}
 .date .n{font:600 clamp(64px,12vw,92px)/1 var(--cap);color:var(--accent);font-variant-numeric:tabular-nums}
@@ -258,7 +258,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   <a class="cue" href="#mehndi">Swipe up</a>
 </header>
 <canvas id="gl" aria-hidden="true"></canvas>
-<nav class="dots" aria-label="Pages"><a href="#top" title="Invitation"></a><a href="#mehndi" title="Mehndi"></a><a href="#rukhsati" title="Rukhsati"></a><a href="#walima" title="Walima"></a><a href="#rsvp" title="RSVP"></a></nav>
+<nav class="dots" aria-label="Pages"><a href="#top" title="Invitation"></a><a href="#mehndi" title="Mehndi"></a><a href="#baraat" title="Baraat"></a><a href="#walima" title="Walima"></a><a href="#rsvp" title="RSVP"></a></nav>
 
 
 <!-- MEHNDI -->
@@ -290,8 +290,8 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   </div>
 </section>
 
-<!-- RUKHSATI -->
-<section class="fn rukhsati rev g" id="rukhsati">
+<!-- BARAAT -->
+<section class="fn baraat rev g" id="baraat">
   <i class="bgp" data-p="paisley" style="--s:210px;--r:20deg;right:-60px;top:10%"></i>
   <i class="bgp" data-p="paisley" style="--s:150px;--r:160deg;left:-30px;bottom:10%"></i>
   <div class="wrap">
@@ -310,11 +310,11 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
     </div>
     <div class="txt">
       <p class="eyebrow cap rv">Function Two &middot; Nikah &amp; send-off</p>
-      <h2 class="rv" style="--dd:.1s">Rukhsati</h2>
-      <p class="tag rv" style="--dd:.15s">The baraat, the nikah and the tender farewell, in crimson and old gold.</p>
+      <h2 class="rv" style="--dd:.1s">Baraat</h2>
+      <p class="tag rv" style="--dd:.15s">The groom's grand procession, the nikah and the tender farewell, in crimson and old gold.</p>
       <div class="date rv" style="--dd:.2s"><span class="n">10</span><span class="m"><b>December</b>Thursday &middot; 2026</span></div>
       <dl class="info rv" style="--dd:.25s">
-        <div><dt>Time</dt><dd>Baraat 7:30 PM<small>Nikah 8:30 PM &middot; Rukhsati 11:00 PM</small></dd></div>
+        <div><dt>Time</dt><dd>Baraat arrives 7:30 PM<small>Nikah 8:30 PM &middot; Rukhsati 11:00 PM</small></dd></div>
         <div><dt>Venue</dt><dd>Shalimar Grand Marquee<small>Satiana Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Shalimar+Grand+Marquee+Satiana+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
       </dl>
       <p class="host rv">Hosted by Mr. &amp; Mrs. Tariq Khan</p>
@@ -364,7 +364,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   <div class="cd rv" id="cd" aria-live="off"><div><b id="cd-d">00</b><span>Days</span></div><div><b id="cd-h">00</b><span>Hours</span></div><div><b id="cd-m">00</b><span>Mins</span></div><div><b id="cd-s">00</b><span>Secs</span></div></div>
   <div class="chips">
     <a class="chip c-m rv" href="#mehndi"><b>08</b><span><small>Tuesday</small><em>Mehndi</em></span></a>
-    <a class="chip c-r rv" href="#rukhsati" style="--dd:.12s"><b>10</b><span><small>Thursday</small><em>Rukhsati</em></span></a>
+    <a class="chip c-r rv" href="#baraat" style="--dd:.12s"><b>10</b><span><small>Thursday</small><em>Baraat</em></span></a>
     <a class="chip c-w rv" href="#walima" style="--dd:.24s"><b>11</b><span><small>Friday</small><em>Walima</em></span></a>
   </div>
     <p class="rv sm">Your presence and prayers will make our three days complete. Please let us know which celebrations you will attend.</p>
@@ -425,7 +425,7 @@ twinkle(document.getElementById('ra'),14,60,'#ffe29a');
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv,.fn').forEach(e=>io.observe(e));
-const ids=['top','mehndi','rukhsati','walima','rsvp'],dots=[...document.querySelectorAll('.dots a')];
+const ids=['top','mehndi','baraat','walima','rsvp'],dots=[...document.querySelectorAll('.dots a')];
 const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4))}}),{threshold:.5});
 ids.forEach(i=>so.observe(document.getElementById(i)));
 
