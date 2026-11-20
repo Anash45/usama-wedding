@@ -223,6 +223,14 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   .rsvp{padding:14px 10px;margin:0 0 12px;gap:6px;font-size:.8em}.tagline{font-size:20px}.note{margin-top:10px;font-size:12px}.top{margin-top:2px}
 }
 @media(max-height:720px){.fin .sm{display:none}}
+#snd{position:fixed;z-index:60;left:max(12px,env(safe-area-inset-left,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:9px;padding:9px 14px 9px 12px;border-radius:30px;border:1px solid var(--gold);background:rgba(34,16,42,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--gold-hi);font:11px var(--cap);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+#snd svg{width:18px;height:16px;fill:var(--gold)}
+#snd rect{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(.35)}
+#snd[aria-pressed=true] rect{animation:eq .9s ease-in-out infinite alternate}
+#snd[aria-pressed=true] rect:nth-child(2){animation-delay:-.3s}#snd[aria-pressed=true] rect:nth-child(3){animation-delay:-.6s}#snd[aria-pressed=true] rect:nth-child(4){animation-delay:-.15s}
+#snd[aria-pressed=false]{animation:ping 2.2s ease-out infinite}
+@keyframes eq{to{transform:scaleY(1)}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(230,184,92,.6)}70%,100%{box-shadow:0 0 0 14px rgba(230,184,92,0)}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .gate{display:none}.inner>*,.js .rv{opacity:1;transform:none;filter:none}
@@ -258,6 +266,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   </div>
   <a class="cue" href="#mehndi">Swipe up</a>
 </header>
+<button id="snd" type="button" aria-pressed="false" aria-label="Play wedding music"><svg viewBox="0 0 18 16" aria-hidden="true"><rect x="0" y="0" width="3" height="16" rx="1.5"/><rect x="5" y="0" width="3" height="16" rx="1.5"/><rect x="10" y="0" width="3" height="16" rx="1.5"/><rect x="15" y="0" width="3" height="16" rx="1.5"/></svg><span id="snd-t">Tap for music</span></button>
 <canvas id="gl" aria-hidden="true"></canvas>
 <nav class="dots" aria-label="Pages"><a href="#top" title="Invitation"></a><a href="#mehndi" title="Mehndi"></a><a href="#baraat" title="Baraat"></a><a href="#walima" title="Walima"></a><a href="#rsvp" title="RSVP"></a></nav>
 
@@ -430,7 +439,7 @@ const FAV=[['#22102a','#b0102a','#e6b85c'],['#ffdf6e','#1c6b34','#d6336c'],['#5c
 // favicon: a kulla (groom's turban cap with fan), recoloured per page theme
 const fav=i=>{const[b,c,a]=FAV[i];document.getElementById('fav').href='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${b}"/><path d="M30 24L38 6L58 10L56 30Z" fill="${a}"/><path d="M33 22L42 8M38 24L47 9M43 26L53 11M48 27L57 14" stroke="${b}" stroke-width="1.6" opacity=".55"/><path d="M13 52V31Q13 22 27 22H35Q49 22 49 31V52Z" fill="${c}"/><rect x="13" y="42" width="36" height="10" fill="${a}"/><circle cx="31" cy="18" r="3.5" fill="${a}"/><circle cx="22" cy="47" r="2" fill="${c}"/><circle cx="31" cy="47" r="2" fill="${c}"/><circle cx="40" cy="47" r="2" fill="${c}"/></svg>`)};fav(0);
 const ids=['top','mehndi','baraat','walima','rsvp'],dots=[...document.querySelectorAll('.dots a')];
-const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4))}}),{threshold:.5});
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4));window.curPage=j;window.musicTheme&&musicTheme()}}),{threshold:.5});
 ids.forEach(i=>so.observe(document.getElementById(i)));
 
 // three.js petal shower: 3D petals recolour per page and drift with scroll
@@ -482,7 +491,40 @@ let px=0,ly=scrollY,last=performance.now();addEventListener('pointermove',e=>px=
   o.g.scale.setScalar(r.width/innerWidth*2*hW*o.frac/o.fit*Math.min(1,vis*2.5));o.g.rotation.y=Math.sin(now/1e3*o.spin)*.9;o.g.rotation.x=Math.sin(now/1e3*.7)*.2});
  M.instanceMatrix.needsUpdate=M.instanceColor.needsUpdate=true;R.render(sc,cam);requestAnimationFrame(loop)})(last);
 }catch(e){console.warn('3D off',e)}})();
-const gate=document.getElementById('gate');gate.onclick=()=>gate.remove();setTimeout(()=>gate.remove(),3000);
+
+// Original Bollywood-wedding style instrumentals, synthesised live: dholki/dhol grooves, sitar plucks, shehnai, pads. One mood per page.
+(()=>{const btn=document.getElementById('snd'),lab=document.getElementById('snd-t'),AC=window.AudioContext||window.webkitAudioContext;if(!AC){btn.hidden=true;return}
+let ctx,master,noise,timer,step=0,next=0,th=0,on=false;
+const SC={y:[0,2,4,6,7,9,11],k:[0,2,3,5,7,9,10],b:[0,2,4,5,7,9,11]};
+const TH=[
+ {bpm:84,root:146.83,sc:SC.y,drum:'D.......t.......',mel:[[0,-1,-1,-1,2,-1,4,-1,5,-1,-1,-1,4,-1,2,-1],[7,-1,-1,-1,6,-1,4,-1,2,-1,-1,-1,0,-1,-1,-1]],pad:.05,dg:.5},
+ {bpm:112,root:164.81,sc:SC.k,drum:'D.t.t.D.D.t.T.t.',mel:[[4,-1,5,4,7,-1,5,4,3,-1,4,3,2,-1,0,-1],[7,-1,8,7,9,-1,7,5,4,-1,5,4,3,2,0,-1]],pad:0,dg:.9},
+ {bpm:124,root:174.61,sc:SC.b,drum:'D.T.D.T.DDtTD.T.',mel:[[7,-1,7,8,9,-1,9,8,7,-1,4,-1,5,-1,7,-1],[9,-1,9,10,11,-1,9,7,8,-1,7,-1,4,-1,0,-1]],pad:.03,dg:1,sh:1},
+ {bpm:76,root:138.59,sc:SC.y,drum:'D.......t.......',mel:[[0,-1,2,-1,4,-1,6,-1,7,-1,6,-1,4,-1,2,-1],[7,-1,9,-1,7,-1,6,-1,4,-1,2,-1,0,-1,-1,-1]],pad:.06,dg:.4}];
+const fr=(T,d)=>{const n=T.sc.length;return T.root*2**((T.sc[((d%n)+n)%n]+12*Math.floor(d/n))/12)};
+const env=(g,t,a,d,pk)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)};
+const osc=(type,f,t,dur,dest,det=0)=>{const o=ctx.createOscillator();o.type=type;o.frequency.value=f;o.detune.value=det;o.connect(dest);o.start(t);o.stop(t+dur);return o};
+function drum(t,k,g){if(k==='D'){const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(55,t+.12);env(a,t,.002,.35,g*.9);o.connect(a).connect(master);o.start(t);o.stop(t+.4)}
+ else{const s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),a=ctx.createGain(),T=k==='T';s.buffer=noise;f.type='bandpass';f.frequency.value=T?2600:4200;f.Q.value=1.2;env(a,t,.001,T?.11:.05,g*(T?.5:.25));s.connect(f).connect(a).connect(master);s.start(t);s.stop(t+.15)}}
+function pluck(t,f,g){const a=ctx.createGain(),lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(f*8,t);lp.frequency.exponentialRampToValueAtTime(f*1.5,t+.5);env(a,t,.003,.7,g);osc('sawtooth',f,t,.8,lp);osc('square',f*2,t,.8,lp,6);lp.connect(a).connect(master)}
+function shehnai(t,f,d,g){const a=ctx.createGain(),bp=ctx.createBiquadFilter(),l=ctx.createOscillator(),lg=ctx.createGain();bp.type='bandpass';bp.frequency.value=f*3;bp.Q.value=3;l.frequency.value=5.5;lg.gain.value=f*.012;
+ const o=osc('sawtooth',f,t,d+.1,bp);l.connect(lg).connect(o.frequency);l.start(t);l.stop(t+d+.1);a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.06);a.gain.exponentialRampToValueAtTime(.0001,t+d);bp.connect(a).connect(master)}
+function pad(t,fs,d,g){const lp=ctx.createBiquadFilter(),a=ctx.createGain();lp.type='lowpass';lp.frequency.value=900;a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+1.2);a.gain.linearRampToValueAtTime(0,t+d);fs.forEach(f=>osc('triangle',f,t,d,lp));lp.connect(a).connect(master)}
+function sched(){const T=TH[th],sd=60/T.bpm/4;while(next<ctx.currentTime+.15){const s=step%16,bar=Math.floor(step/16)%2,k=T.drum[s],d=T.mel[bar][s];
+ if(k!=='.')drum(next,k,T.dg);
+ if(d>=0)T.sh?shehnai(next,fr(T,d+7),sd*2.2,.22):pluck(next,fr(T,d+7),.28);
+ if(s===0&&bar===0&&T.pad)pad(next,[fr(T,0),fr(T,4),fr(T,7)],sd*32,T.pad);
+ next+=sd;step++}}
+const idx=()=>{const i=window.curPage|0;return i===4?0:i};
+window.musicTheme=()=>{if(!on||idx()===th)return;master.gain.setTargetAtTime(0,ctx.currentTime,.06);setTimeout(()=>{if(!on)return;th=idx();step=0;next=ctx.currentTime+.05;master.gain.setTargetAtTime(.6,ctx.currentTime,.12)},250)};
+btn.onclick=()=>{if(!on){if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=0;const c=ctx.createDynamicsCompressor();master.connect(c).connect(ctx.destination);
+  noise=ctx.createBuffer(1,ctx.sampleRate*.3,ctx.sampleRate);const n=noise.getChannelData(0);for(let i=0;i<n.length;i++)n[i]=Math.random()*2-1}
+  ctx.resume();th=idx();step=0;next=ctx.currentTime+.05;timer=setInterval(sched,40);master.gain.setTargetAtTime(.6,ctx.currentTime,.3);on=true}
+ else{master.gain.setTargetAtTime(0,ctx.currentTime,.1);on=false;setTimeout(()=>{if(!on)clearInterval(timer)},500)}
+ btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
+document.addEventListener('visibilitychange',()=>{if(ctx&&on)document.hidden?ctx.suspend():ctx.resume()});
+})();
+const gate=document.getElementById('gate');gate.onclick=()=>{gate.remove();const b=document.getElementById('snd');if(b.getAttribute('aria-pressed')!=='true')b.click()};setTimeout(()=>gate.remove(),3000);
 
 const T=new Date(2026,11,8,19,0,0);
 const z=n=>String(n).padStart(2,'0');
