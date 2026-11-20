@@ -199,7 +199,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
 @media(max-width:819px){
   .fn,.fin{padding-left:max(26px,env(safe-area-inset-left,0px));padding-right:max(26px,env(safe-area-inset-right,0px))}
   .fn{padding-block:34px 16px}.wrap{gap:12px}
-  .arch{width:min(100%,430px,calc(31dvh*.8))}
+  .arch{width:min(100%,430px,calc(40dvh*.8))}
   .txt{text-align:center}.fn h2{margin:0 auto;font-size:clamp(56px,16vw,72px)}
   .eyebrow{font-size:10px;margin:0}
   .tag{font-size:1.02em;margin:0 auto 8px;line-height:1.3}
@@ -210,7 +210,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   .info dt{line-height:1.5;font-size:10px}.info dd{font-size:.88em;line-height:1.25}
   .host{margin:8px 0 0;font-size:.9em}
 }
-@media(max-width:819px) and (max-height:720px){.tag,.host{display:none}.arch{width:min(100%,calc(26dvh*.8))}.hero{padding-top:84px}}
+@media(max-width:819px) and (max-height:720px){.tag,.host{display:none}.arch{width:min(100%,calc(33dvh*.8))}.hero{padding-top:84px}}
 
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none}
 .chips{margin-bottom:22px}.fin .cd{margin:6px 0 22px}
@@ -284,8 +284,6 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
       <dl class="info rv" style="--dd:.25s">
         <div><dt>Time</dt><dd>7:00 PM onwards<small>Dinner served at 9:30 PM</small></dd></div>
         <div><dt>Venue</dt><dd>Bagh-e-Gulzar Farmhouse<small>Canal Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Bagh-e-Gulzar+Farmhouse+Canal+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
-        <div><dt>Dress</dt><dd>Yellow, green and marigold<small>Shararas, ghararas and bright kurtas</small></dd></div>
-        <div><dt>Evening</dt><dd>Henna artists, dholki, live qawwali, group dances and a chaat corner</dd></div>
       </dl>
       <p class="host rv">Hosted by Mr. &amp; Mrs. Tariq Khan</p>
     </div>
@@ -318,8 +316,6 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
       <dl class="info rv" style="--dd:.25s">
         <div><dt>Time</dt><dd>Baraat 7:30 PM<small>Nikah 8:30 PM &middot; Rukhsati 11:00 PM</small></dd></div>
         <div><dt>Venue</dt><dd>Shalimar Grand Marquee<small>Satiana Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Shalimar+Grand+Marquee+Satiana+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
-        <div><dt>Dress</dt><dd>Maroon, red and gold<small>Formal: sherwanis, lehngas and heavy dupattas</small></dd></div>
-        <div><dt>Evening</dt><dd>Baraat with dhol, the nikah ceremony, dinner and the doli send-off</dd></div>
       </dl>
       <p class="host rv">Hosted by Mr. &amp; Mrs. Tariq Khan</p>
     </div>
@@ -333,7 +329,6 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
   <div class="wrap">
     <div class="art rv" style="--x:-50px;--y:0">
       <div class="arch w-arch" id="wa">
-        <svg class="moon" viewBox="0 0 100 100" aria-hidden="true"><mask id="cm"><rect width="100" height="100" fill="#fff"/><circle cx="62" cy="40" r="34" fill="#000"/></mask><circle cx="44" cy="52" r="40" fill="#f6e3a1" mask="url(#cm)"/><path d="M82 14l2.6 7.6 8 .2-6.4 4.8 2.3 7.6-6.5-4.5-6.5 4.5 2.3-7.6-6.4-4.8 8-.2z" fill="#f6e3a1"/></svg>
         <div class="pr lanw" data-p="lantern" style="left:12%;top:0;width:11%;transform-origin:50% 0;animation:swing 4s ease-in-out infinite alternate"></div>
         <div class="pr lanw" data-p="lantern" style="left:30%;top:0;width:8%;transform-origin:50% 0;animation:swing 4.6s ease-in-out -2s infinite alternate"></div>
         <svg class="sky" viewBox="0 0 400 220" aria-hidden="true">
@@ -355,8 +350,6 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
       <dl class="info rv" style="--dd:.25s">
         <div><dt>Time</dt><dd>Reception 8:00 PM<small>Dinner served at 9:30 PM</small></dd></div>
         <div><dt>Venue</dt><dd>The Royal Palm Banquet<small>Susan Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Royal+Palm+Banquet+Susan+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
-        <div><dt>Dress</dt><dd>Pastels, emerald and ivory<small>Elegant formals, light embroidery</small></dd></div>
-        <div><dt>Evening</dt><dd>Dua for the couple, the grand entrance, a Punjabi dawat and kehwa with sweets</dd></div>
       </dl>
       <p class="host rv">Hosted by Mr. &amp; Mrs. Saleem Malik</p>
     </div>
@@ -451,16 +444,40 @@ let pal=0;window.setPal=i=>pal=i;
 const rnd=(a,b)=>a+Math.random()*(b-a),P=[],cur=[],tg=new T.Color(),d=new T.Object3D();
 for(let i=0;i<N;i++){P.push({u:rnd(-1,1),v:rnd(-1,1),z:rnd(-4,5),s:rnd(.1,.22),r:[rnd(0,6),rnd(0,6),rnd(0,6)],w:[rnd(-1,1),rnd(-1,1),rnd(-1,1)],f:rnd(.04,.1),ph:rnd(0,6),c:i%3});cur.push(new T.Color(PAL[0][i%3]));M.setColorAt(i,cur[i])}
 const size=()=>{R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};size();addEventListener('resize',size);
+
+// 3D props pinned to the arch frames: marigold, wedding rings, crescent & star, khatam
+const star=(n,ro,ri,dp)=>{const sh=new T.Shape();for(let i=0;i<n*2;i++){const r=i%2?ri:ro,a=i/(n*2)*Math.PI*2+Math.PI/2,x=Math.cos(a)*r,y=Math.sin(a)*r;i?sh.lineTo(x,y):sh.moveTo(x,y)}
+ const e=new T.ExtrudeGeometry(sh,{depth:dp,bevelEnabled:true,bevelThickness:.04,bevelSize:.04,bevelSegments:2});e.translate(0,0,-dp/2);return e};
+const gold=new T.MeshStandardMaterial({color:0xe6b85c,metalness:.5,roughness:.3,emissive:0x4a3205});
+const pl=new T.PointLight(0xfff0cc,.8);pl.position.set(0,1,8);sc.add(pl);
+const pg=g.clone();pg.translate(0,.75,0);
+const mk={
+ flower(){const G=new T.Group(),F=new T.Group();F.rotation.x=-.9;G.add(F);
+  [[12,'#f28c1c',.95,.15],[10,'#ff9f1a',.8,.45],[8,'#ffbe2e',.65,.8],[6,'#ffd54a',.5,1.1]].forEach(([n,c,sz,tl],k)=>{const m=new T.MeshStandardMaterial({color:c,side:T.DoubleSide,roughness:.55,emissive:c,emissiveIntensity:.15});
+   for(let i=0;i<n;i++){const v=new T.Group();v.rotation.z=i/n*6.283+k*.3;const p=new T.Mesh(pg,m);p.rotation.x=tl;p.scale.setScalar(sz);v.add(p);F.add(v)}});
+  const c=new T.Mesh(new T.SphereGeometry(.16,16,16),new T.MeshStandardMaterial({color:0x8a3b05}));c.position.z=.12;F.add(c);return[G,2.8]},
+ rings(){const G=new T.Group(),A=new T.Mesh(new T.TorusGeometry(1,.15,20,64),gold),B=new T.Mesh(new T.TorusGeometry(1,.15,20,64),new T.MeshStandardMaterial({color:0xe8a58f,metalness:.5,roughness:.3,emissive:0x40180c}));
+  A.position.x=-.5;B.position.x=.5;B.rotation.y=Math.PI/2;G.add(A,B);G.rotation.x=.45;
+  const d=new T.Mesh(new T.OctahedronGeometry(.2),new T.MeshStandardMaterial({color:0xff4f7b,emissive:0xff2d6a,emissiveIntensity:.7}));d.position.set(-.5,1.15,0);G.add(d);return[G,3.2]},
+ crescent(){const G=new T.Group(),sh=new T.Shape();sh.moveTo(.69,.724);sh.absarc(0,0,1,.81,6.283-.81,false);sh.absarc(.35,0,.8,-1.131,1.131,true);
+  const e=new T.ExtrudeGeometry(sh,{depth:.3,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:2});e.translate(0,0,-.15);
+  const m=new T.Mesh(e,new T.MeshStandardMaterial({color:0xf6e3a1,metalness:.3,roughness:.35,emissive:0x6a5420,emissiveIntensity:.6})),s=new T.Mesh(star(5,.3,.13,.12),m.material);s.position.set(.4,0,0);G.add(m,s);G.position.x=-.1;const W=new T.Group();W.add(G);return[W,2]},
+ khatam(){const G=new T.Group();G.add(new T.Mesh(star(8,1,.7,.18),gold));return[G,2]}
+};
+const O=[['.stage','khatam',.17,0,-.41,.9],['.m-arch','flower',.5,0,0,.5],['.r-arch','rings',.42,0,-.27,.7],['.w-arch','crescent',.4,0,-.2,.8]].map(([q,k,frac,ox,oy,spin])=>{const[o,fit]=mk[k]();const W=new T.Group();W.add(o);sc.add(W);return{el:document.querySelector(q),g:W,frac,fit,ox,oy,spin}});
 let px=0,ly=scrollY,last=performance.now();addEventListener('pointermove',e=>px=e.clientX/innerWidth-.5);
 (function loop(now){const dt=Math.min(.05,(now-last)/1e3);last=now;const dy=(scrollY-ly)/innerHeight;ly=scrollY;
- cam.position.x+=(px*1.6-cam.position.x)*.04;cam.lookAt(0,0,0);
+ cam.position.x+=(px*.6-cam.position.x)*.04;cam.lookAt(0,0,0);
  P.forEach((p,i)=>{const hH=TH*(10-p.z),hW=hH*cam.aspect,k=.5+(p.z+4)/9;
   p.v-=p.f*dt*(.6+k*.6);p.v+=dy*2*k;if(p.v<-1.15)p.v=1.15;if(p.v>1.15)p.v=-1.15;
   const sw=Math.sin(now/1e3*.8+p.ph)*.05;
   d.position.set((p.u+sw)*hW,p.v*hH,p.z);d.rotation.set(p.r[0]+=p.w[0]*dt,p.r[1]+=p.w[1]*dt,p.r[2]+=p.w[2]*dt);d.scale.setScalar(p.s);d.updateMatrix();M.setMatrixAt(i,d.matrix);
   cur[i].lerp(tg.set(PAL[pal][p.c]),.04);M.setColorAt(i,cur[i])});
+ O.forEach(o=>{const r=o.el.getBoundingClientRect(),cy=r.top+r.height*(.5+o.oy),cx=r.left+r.width*(.5+o.ox),vis=Math.max(0,1-Math.abs(cy-innerHeight/2)/(innerHeight*.7)),hH=TH*10,hW=hH*cam.aspect;
+  o.g.visible=vis>.02;o.g.position.set((cx/innerWidth*2-1)*hW,-(cy/innerHeight*2-1)*hH,0);
+  o.g.scale.setScalar(r.width/innerWidth*2*hW*o.frac/o.fit*Math.min(1,vis*2.5));o.g.rotation.y=Math.sin(now/1e3*o.spin)*.9;o.g.rotation.x=Math.sin(now/1e3*.7)*.2});
  M.instanceMatrix.needsUpdate=M.instanceColor.needsUpdate=true;R.render(sc,cam);requestAnimationFrame(loop)})(last);
-}catch(e){}})();
+}catch(e){console.warn('3D off',e)}})();
 const gate=document.getElementById('gate');gate.onclick=()=>gate.remove();setTimeout(()=>gate.remove(),3000);
 
 const T=new Date(2026,11,8,19,0,0);
