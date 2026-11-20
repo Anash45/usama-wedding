@@ -6,6 +6,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Taiba &amp; Usama Shaadi</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" id="fav" type="image/svg+xml" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Amiri:wght@400;700&display=swap">
@@ -425,8 +426,11 @@ twinkle(document.getElementById('ra'),14,60,'#ffe29a');
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv,.fn').forEach(e=>io.observe(e));
+const FAV=[['#22102a','#b0102a','#e6b85c'],['#ffdf6e','#1c6b34','#d6336c'],['#5c0b18','#e6b85c','#fff0b8'],['#e6f2ed','#0e6b5e','#c9857a'],['#22102a','#b0102a','#e6b85c']];
+// favicon: a kulla (groom's turban cap with fan), recoloured per page theme
+const fav=i=>{const[b,c,a]=FAV[i];document.getElementById('fav').href='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${b}"/><path d="M30 24L38 6L58 10L56 30Z" fill="${a}"/><path d="M33 22L42 8M38 24L47 9M43 26L53 11M48 27L57 14" stroke="${b}" stroke-width="1.6" opacity=".55"/><path d="M13 52V31Q13 22 27 22H35Q49 22 49 31V52Z" fill="${c}"/><rect x="13" y="42" width="36" height="10" fill="${a}"/><circle cx="31" cy="18" r="3.5" fill="${a}"/><circle cx="22" cy="47" r="2" fill="${c}"/><circle cx="31" cy="47" r="2" fill="${c}"/><circle cx="40" cy="47" r="2" fill="${c}"/></svg>`)};fav(0);
 const ids=['top','mehndi','baraat','walima','rsvp'],dots=[...document.querySelectorAll('.dots a')];
-const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4))}}),{threshold:.5});
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4))}}),{threshold:.5});
 ids.forEach(i=>so.observe(document.getElementById(i)));
 
 // three.js petal shower: 3D petals recolour per page and drift with scroll
