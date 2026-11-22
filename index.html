@@ -484,26 +484,6 @@ const rnd=(a,b)=>a+Math.random()*(b-a),P=[],cur=[],tg=new T.Color(),d=new T.Obje
 for(let i=0;i<N;i++){P.push({u:rnd(-1,1),v:rnd(-1,1),z:rnd(-4,5),s:rnd(.1,.22),r:[rnd(0,6),rnd(0,6),rnd(0,6)],w:[rnd(-1,1),rnd(-1,1),rnd(-1,1)],f:rnd(.04,.1),ph:rnd(0,6),c:i%3});cur.push(new T.Color(PAL[0][i%3]));M.setColorAt(i,cur[i])}
 const size=()=>{R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};size();addEventListener('resize',size);
 
-// 3D props pinned to the arch frames: marigold, wedding rings, crescent & star, khatam
-const star=(n,ro,ri,dp)=>{const sh=new T.Shape();for(let i=0;i<n*2;i++){const r=i%2?ri:ro,a=i/(n*2)*Math.PI*2+Math.PI/2,x=Math.cos(a)*r,y=Math.sin(a)*r;i?sh.lineTo(x,y):sh.moveTo(x,y)}
- const e=new T.ExtrudeGeometry(sh,{depth:dp,bevelEnabled:true,bevelThickness:.04,bevelSize:.04,bevelSegments:2});e.translate(0,0,-dp/2);return e};
-const gold=new T.MeshStandardMaterial({color:0xe6b85c,metalness:.5,roughness:.3,emissive:0x4a3205});
-const pl=new T.PointLight(0xfff0cc,.8);pl.position.set(0,1,8);sc.add(pl);
-const pg=g.clone();pg.translate(0,.75,0);
-const mk={
- flower(){const G=new T.Group(),F=new T.Group();F.rotation.x=-.9;G.add(F);
-  [[12,'#f28c1c',.95,.15],[10,'#ff9f1a',.8,.45],[8,'#ffbe2e',.65,.8],[6,'#ffd54a',.5,1.1]].forEach(([n,c,sz,tl],k)=>{const m=new T.MeshStandardMaterial({color:c,side:T.DoubleSide,roughness:.55,emissive:c,emissiveIntensity:.15});
-   for(let i=0;i<n;i++){const v=new T.Group();v.rotation.z=i/n*6.283+k*.3;const p=new T.Mesh(pg,m);p.rotation.x=tl;p.scale.setScalar(sz);v.add(p);F.add(v)}});
-  const c=new T.Mesh(new T.SphereGeometry(.16,16,16),new T.MeshStandardMaterial({color:0x8a3b05}));c.position.z=.12;F.add(c);return[G,2.8]},
- rings(){const G=new T.Group(),A=new T.Mesh(new T.TorusGeometry(1,.15,20,64),gold),B=new T.Mesh(new T.TorusGeometry(1,.15,20,64),new T.MeshStandardMaterial({color:0xe8a58f,metalness:.5,roughness:.3,emissive:0x40180c}));
-  A.position.x=-.5;B.position.x=.5;B.rotation.y=Math.PI/2;G.add(A,B);G.rotation.x=.45;
-  const d=new T.Mesh(new T.OctahedronGeometry(.2),new T.MeshStandardMaterial({color:0xff4f7b,emissive:0xff2d6a,emissiveIntensity:.7}));d.position.set(-.5,1.15,0);G.add(d);return[G,3.2]},
- crescent(){const G=new T.Group(),sh=new T.Shape();sh.moveTo(.69,.724);sh.absarc(0,0,1,.81,6.283-.81,false);sh.absarc(.35,0,.8,-1.131,1.131,true);
-  const e=new T.ExtrudeGeometry(sh,{depth:.3,bevelEnabled:true,bevelThickness:.05,bevelSize:.05,bevelSegments:2});e.translate(0,0,-.15);
-  const m=new T.Mesh(e,new T.MeshStandardMaterial({color:0xf6e3a1,metalness:.3,roughness:.35,emissive:0x6a5420,emissiveIntensity:.6})),s=new T.Mesh(star(5,.3,.13,.12),m.material);s.position.set(.4,0,0);G.add(m,s);G.position.x=-.1;const W=new T.Group();W.add(G);return[W,2]},
- khatam(){const G=new T.Group();G.add(new T.Mesh(star(8,1,.7,.18),gold));return[G,2]}
-};
-const O=[['.stage','khatam',.17,0,-.41,.9],['.m-arch','flower',.5,0,0,.5],['.r-arch','rings',.42,0,-.27,.7],['.w-arch','crescent',.4,0,-.2,.8]].map(([q,k,frac,ox,oy,spin])=>{const[o,fit]=mk[k]();const W=new T.Group();W.add(o);sc.add(W);return{el:document.querySelector(q),g:W,frac,fit,ox,oy,spin}});
 let px=0,ly=scrollY,last=performance.now();addEventListener('pointermove',e=>px=e.clientX/innerWidth-.5);
 (function loop(now){const dt=Math.min(.05,(now-last)/1e3);last=now;const dy=(scrollY-ly)/innerHeight;ly=scrollY;
  cam.position.x+=(px*.6-cam.position.x)*.04;cam.lookAt(0,0,0);
@@ -512,9 +492,6 @@ let px=0,ly=scrollY,last=performance.now();addEventListener('pointermove',e=>px=
   const sw=Math.sin(now/1e3*.8+p.ph)*.05;
   d.position.set((p.u+sw)*hW,p.v*hH,p.z);d.rotation.set(p.r[0]+=p.w[0]*dt,p.r[1]+=p.w[1]*dt,p.r[2]+=p.w[2]*dt);d.scale.setScalar(p.s);d.updateMatrix();M.setMatrixAt(i,d.matrix);
   cur[i].lerp(tg.set(PAL[pal][p.c]),.04);M.setColorAt(i,cur[i])});
- O.forEach(o=>{const r=o.el.getBoundingClientRect(),cy=r.top+r.height*(.5+o.oy),cx=r.left+r.width*(.5+o.ox),vis=Math.max(0,1-Math.abs(cy-innerHeight/2)/(innerHeight*.7)),hH=TH*10,hW=hH*cam.aspect;
-  o.g.visible=vis>.02;o.g.position.set((cx/innerWidth*2-1)*hW,-(cy/innerHeight*2-1)*hH,0);
-  o.g.scale.setScalar(r.width/innerWidth*2*hW*o.frac/o.fit*Math.min(1,vis*2.5));o.g.rotation.y=Math.sin(now/1e3*o.spin)*.9;o.g.rotation.x=Math.sin(now/1e3*.7)*.2});
  M.instanceMatrix.needsUpdate=M.instanceColor.needsUpdate=true;R.render(sc,cam);requestAnimationFrame(loop)})(last);
 }catch(e){console.warn('3D off',e)}})();
 
