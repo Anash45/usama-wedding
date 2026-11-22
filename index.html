@@ -230,7 +230,8 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
 }
 @media(max-width:819px) and (max-height:720px){.tag,.host{display:none}.arch{width:min(100%,calc(33vh*.8));width:min(100%,calc(33dvh*.8))}.hero{padding-top:84px}}
 
-#gl{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none}
+.glit{position:fixed;inset:0;z-index:40;pointer-events:none}
+.glit .tw{filter:drop-shadow(0 0 3px rgba(255,205,90,.95))}
 .chips{margin-bottom:22px}.fin .cd{margin:6px 0 22px}
 @media(max-width:819px){
   .fin{padding-block:34px 20px}.fin h2{font-size:54px;margin:0}.fin .sm{font-size:.95em;line-height:1.3;margin:0 0 12px}
@@ -258,7 +259,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   <div class="env">
     <svg class="back" viewBox="0 0 300 200" aria-hidden="true"><rect width="300" height="200" rx="5" fill="#8a1425"/><rect x="5" y="5" width="290" height="190" rx="3" fill="none" stroke="rgba(230,184,92,.55)"/></svg>
     <div class="card"><span class="c1">Wedding invitation</span><span class="c2">Taiba &amp; Usama</span><span class="c3">8 &middot; 10 &middot; 11 December 2026</span></div>
-    <svg class="pocket" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0L150 112L300 0V200H0Z" fill="#a41c30"/><path d="M0 200L120 98M300 200L180 98" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/><path d="M0 0L150 112L300 0" fill="none" stroke="rgba(230,184,92,.7)" stroke-width="1.6"/><rect x="1" y="1" width="298" height="198" rx="4" fill="none" stroke="rgba(230,184,92,.5)"/></svg>
+    <svg class="pocket" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0L150 112L300 0V200H0Z" fill="#a41c30"/><path d="M0 200L120 98M300 200L180 98" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/><path d="M0 0L150 112L300 0" fill="none" stroke="rgba(230,184,92,.7)" stroke-width="1.6"/><path d="M1 0V199H299V0" fill="none" stroke="rgba(230,184,92,.5)"/></svg>
     <div class="flap"><svg class="f" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#b8263c" stroke="rgba(230,184,92,.8)" stroke-width="1.6"/><path d="M26 6L150 106L274 6" fill="none" stroke="rgba(230,184,92,.35)" stroke-dasharray="2 4"/></svg><svg class="b" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#6e0b19" stroke="rgba(230,184,92,.6)" stroke-width="1.6"/></svg></div>
     <div class="seal" role="button" tabindex="0" aria-label="Open the invitation">T&amp;U</div>
   </div>
@@ -289,7 +290,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   <a class="cue" href="#mehndi">Swipe up</a>
 </header>
 <button id="snd" type="button" aria-pressed="false" aria-label="Play wedding music"><svg viewBox="0 0 18 16" aria-hidden="true"><rect x="0" y="0" width="3" height="16" rx="1.5"/><rect x="5" y="0" width="3" height="16" rx="1.5"/><rect x="10" y="0" width="3" height="16" rx="1.5"/><rect x="15" y="0" width="3" height="16" rx="1.5"/></svg><span id="snd-t">Tap for music</span></button>
-<canvas id="gl" aria-hidden="true"></canvas>
+<div class="glit" id="glit" aria-hidden="true"></div>
 <nav class="dots" aria-label="Pages"><a href="#top" title="Invitation"></a><a href="#mehndi" title="Mehndi"></a><a href="#baraat" title="Baraat"></a><a href="#walima" title="Walima"></a><a href="#rsvp" title="RSVP"></a></nav>
 
 
@@ -411,7 +412,6 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 document.documentElement.classList.add('js');
 const flower=(x,y,r,c)=>{let a='',b='';for(let i=0;i<14;i++)a+=`<ellipse cy="${-r*.6}" rx="${r*.26}" ry="${r*.5}" transform="rotate(${i*25.7})"/>`;for(let i=0;i<9;i++)b+=`<ellipse cy="${-r*.35}" rx="${r*.22}" ry="${r*.36}" transform="rotate(${i*40+10})"/>`;
@@ -464,32 +464,9 @@ const ids=['top','mehndi','baraat','walima','rsvp'],dots=[...document.querySelec
 const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4));window.curPage=j}}),{threshold:.5});
 ids.forEach(i=>so.observe(document.getElementById(i)));
 
-// three.js petal shower: 3D petals recolour per page and drift with scroll
-(()=>{if(!window.THREE)return;
-try{const T=THREE,cv=document.getElementById('gl'),R=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
-R.setPixelRatio(Math.min(devicePixelRatio,2));
-const sc=new T.Scene(),cam=new T.PerspectiveCamera(50,1,.1,50),TH=Math.tan(25*Math.PI/180);cam.position.z=10;
-sc.add(new T.AmbientLight(0xffffff,.6));const dl=new T.DirectionalLight(0xffffff,.7);dl.position.set(3,5,8);sc.add(dl);
-const g=new T.PlaneGeometry(1,1.5,6,6),pp=g.attributes.position;
-for(let i=0;i<pp.count;i++){let x=pp.getX(i),y=pp.getY(i);const t=(y+.75)/1.5;x*=Math.sin(Math.PI*Math.pow(t,.8));pp.setXYZ(i,x,y,.6*x*x+.1*Math.sin(t*3))}
-g.computeVertexNormals();
-const N=innerWidth<600?45:85,M=new T.InstancedMesh(g,new T.MeshStandardMaterial({side:T.DoubleSide,roughness:.6,metalness:.1,transparent:true,opacity:.85}),N);sc.add(M);
-const PAL=[['#f28c1c','#ffc02e','#e6b85c'],['#f28c1c','#ffc02e','#d6336c'],['#e6b85c','#ff6b7a','#fbe3a2'],['#e58aa0','#f4b6c0','#2f9c8a'],['#e6b85c','#f28c1c','#ffc02e']];
-let pal=0;window.setPal=i=>pal=i;
-const rnd=(a,b)=>a+Math.random()*(b-a),P=[],cur=[],tg=new T.Color(),d=new T.Object3D();
-for(let i=0;i<N;i++){P.push({u:rnd(-1,1),v:rnd(-1,1),z:rnd(-4,5),s:rnd(.1,.22),r:[rnd(0,6),rnd(0,6),rnd(0,6)],w:[rnd(-1,1),rnd(-1,1),rnd(-1,1)],f:rnd(.04,.1),ph:rnd(0,6),c:i%3});cur.push(new T.Color(PAL[0][i%3]));M.setColorAt(i,cur[i])}
-const size=()=>{R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};size();addEventListener('resize',size);
-
-let px=0,ly=scrollY,last=performance.now();addEventListener('pointermove',e=>px=e.clientX/innerWidth-.5);
-(function loop(now){const dt=Math.min(.05,(now-last)/1e3);last=now;const dy=(scrollY-ly)/innerHeight;ly=scrollY;
- cam.position.x+=(px*.6-cam.position.x)*.04;cam.lookAt(0,0,0);
- P.forEach((p,i)=>{const hH=TH*(10-p.z),hW=hH*cam.aspect,k=.5+(p.z+4)/9;
-  p.v-=p.f*dt*(.6+k*.6);p.v+=dy*2*k;if(p.v<-1.15)p.v=1.15;if(p.v>1.15)p.v=-1.15;
-  const sw=Math.sin(now/1e3*.8+p.ph)*.05;
-  d.position.set((p.u+sw)*hW,p.v*hH,p.z);d.rotation.set(p.r[0]+=p.w[0]*dt,p.r[1]+=p.w[1]*dt,p.r[2]+=p.w[2]*dt);d.scale.setScalar(p.s);d.updateMatrix();M.setMatrixAt(i,d.matrix);
-  cur[i].lerp(tg.set(PAL[pal][p.c]),.04);M.setColorAt(i,cur[i])});
- M.instanceMatrix.needsUpdate=M.instanceColor.needsUpdate=true;R.render(sc,cam);requestAnimationFrame(loop)})(last);
-}catch(e){console.warn('3D off',e)}})();
+// a little glitter over every page
+(()=>{const g=document.getElementById('glit'),r=(a,b)=>a+Math.random()*(b-a),place=t=>{t.style.left=r(3,97)+'%';t.style.top=r(3,97)+'%'};
+for(let i=0;i<(innerWidth<600?14:22);i++){const t=document.createElement('i');t.className='tw';t.style.cssText=`--s:${r(5,11)}px;--t:${r(2.6,5)}s;--dl:${-r(0,5)}s;--c:${Math.random()<.5?'#ffe08a':'#e3a92f'}`;place(t);t.addEventListener('animationiteration',()=>place(t));g.append(t)}})();
 
 // Original Bollywood-wedding style instrumentals, synthesised live: dholki/dhol grooves, sitar plucks, shehnai, pads. One mood per page.
 (()=>{const btn=document.getElementById('snd'),lab=document.getElementById('snd-t'),AC=window.AudioContext||window.webkitAudioContext;if(!AC){btn.hidden=true;return}
