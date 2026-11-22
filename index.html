@@ -28,7 +28,7 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
 /* ---------- envelope intro ---------- */
 .gate{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;touch-action:none;
-  background:radial-gradient(90% 70% at 50% 45%,#4a1f55,#22102a 70%,#12051a);transition:opacity 1s ease .3s}
+  background:radial-gradient(90% 70% at 50% 45%,#4a1f55,#22102a 70%,#12051a);transition:opacity 1.1s ease .2s,transform 1.4s cubic-bezier(.55,0,.9,.35) .1s}
 .gate::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,rgba(230,184,92,.18) 1.4px,transparent 1.8px) 0 0/26px 26px}
 .gate .t{position:relative;color:var(--gold);transition:opacity .5s}
 .gate .t.h{animation:blink 1.8s ease-in-out infinite}
@@ -55,9 +55,7 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .gate.open .flap{transform:rotateX(180deg);z-index:1}
 .gate.open .card{transform:translateY(-64%)}
 .gate.open .t.h{opacity:0;animation:none}
-.gate.go{opacity:0;pointer-events:none}
-.gate.go .card{transform:translateY(-64%) scale(2.6);opacity:0}
-.gate.go .env{opacity:0}
+.gate.go{opacity:0;transform:scale(2.4);pointer-events:none}
 html:not(.opened) .hero *{animation-play-state:paused}
 
 /* ---------- hero ---------- */
@@ -203,7 +201,7 @@ html:not(.opened) .hero *{animation-play-state:paused}
 
 
 /* ---------- one screen per page ---------- */
-html{scroll-snap-type:y mandatory;background:var(--plum)}
+html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum)}
 .hero,.fn,.fin{scroll-snap-align:start;scroll-snap-stop:always;min-height:100dvh;display:flex;flex-direction:column;justify-content:center}
 .fn>.wrap,.fin>div{width:100%}
 .stage{width:min(100%,440px,calc((100dvh - 150px)*.645))}
@@ -547,11 +545,25 @@ btn.onclick=()=>{if(!on){if(!ctx){ctx=new AC();master=ctx.createGain();master.ga
  btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
 document.addEventListener('visibilitychange',()=>{if(ctx&&on)document.hidden?ctx.suspend():ctx.resume()});
 })();
+
+// one gesture = one page: wheel, swipe and keys move exactly one screen
+(()=>{const S=['top','mehndi','baraat','walima','rsvp'].map(i=>document.getElementById(i));let lock=false;
+const cur=()=>S.findIndex(e=>{const r=e.getBoundingClientRect();return r.top<=innerHeight/2&&r.bottom>innerHeight/2});
+const edge=d=>{const r=S[Math.max(cur(),0)].getBoundingClientRect();return d>0?r.bottom<=innerHeight+4:r.top>=-4};
+const go=d=>{const i=cur()+d;if(lock||i<0||i>=S.length)return;lock=true;S[i].scrollIntoView({behavior:'smooth'});setTimeout(()=>lock=false,950)};
+const live=()=>document.documentElement.classList.contains('opened');
+addEventListener('wheel',e=>{if(!live()||Math.abs(e.deltaY)<4)return;const d=e.deltaY>0?1:-1;if(!edge(d))return;e.preventDefault();go(d)},{passive:false});
+let y0=0,hold=false;
+addEventListener('touchstart',e=>{y0=e.touches[0].clientY;hold=false},{passive:true});
+addEventListener('touchmove',e=>{if(!live())return;const d=y0>e.touches[0].clientY?1:-1;if(edge(d)){hold=true;e.preventDefault()}},{passive:false});
+addEventListener('touchend',e=>{if(!hold)return;const dy=y0-e.changedTouches[0].clientY;if(Math.abs(dy)>30)go(dy>0?1:-1)});
+addEventListener('keydown',e=>{if(!live())return;const k={ArrowDown:1,PageDown:1,' ':1,ArrowUp:-1,PageUp:-1}[e.key];if(k&&edge(k)){e.preventDefault();go(k)}});
+})();
 const gate=document.getElementById('gate'),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const root=document.documentElement,unlock=()=>{root.classList.add('opened');root.style.overflow='';gate.remove()};
 root.style.overflow='hidden';
 function openGate(){if(gate.classList.contains('open'))return;gate.classList.add('open');const b=document.getElementById('snd');if(b.getAttribute('aria-pressed')!=='true')b.click();
- setTimeout(()=>gate.classList.add('go'),2500);setTimeout(()=>root.classList.add('opened'),2700);setTimeout(unlock,3800)}
+ setTimeout(()=>gate.classList.add('go'),2500);setTimeout(()=>root.classList.add('opened'),2700);setTimeout(unlock,4000)}
 const sealEl=gate.querySelector('.seal');sealEl.onclick=openGate;sealEl.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGate()}};
 
 const T=new Date(2026,11,8,19,0,0);
