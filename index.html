@@ -26,22 +26,39 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .g{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .cap{font-family:var(--cap);text-transform:uppercase;letter-spacing:.22em;font-size:12px}
 
-/* ---------- gate ---------- */
-.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;cursor:pointer;animation:gone 0s 2.6s forwards}
-.door{position:absolute;top:0;bottom:0;width:50.2%;
-  background:linear-gradient(45deg,transparent 47%,rgba(230,184,92,.28) 48% 52%,transparent 53%) 0 0/38px 38px,
-             linear-gradient(-45deg,transparent 47%,rgba(230,184,92,.28) 48% 52%,transparent 53%) 0 0/38px 38px,#2a1235;
-  box-shadow:inset 0 0 0 12px #2a1235,inset 0 0 0 14px var(--gold);animation:open 1.4s cubic-bezier(.7,0,.25,1) 1.1s forwards}
-.door.l{left:0;--o:-101%}.door.r{right:0;--o:101%}
-.door::after{content:"";position:absolute;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--gold)}
-.door.l::after{right:26px}.door.r::after{left:26px}
-.seal{position:relative;z-index:2;width:150px;height:150px;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 35% 30%,#fff0b8,#e6b85c 55%,#a8761f);color:#3b1a45;font:46px/1.4 var(--script);letter-spacing:.04em;padding-right:.12em;overflow:visible;
-  box-shadow:0 0 0 6px #2a1235,0 0 0 8px var(--gold),0 0 50px rgba(230,184,92,.5);animation:seal .5s ease 1s forwards,pulse 1.6s ease-in-out infinite alternate}
-@keyframes open{to{transform:translateX(var(--o))}}
-@keyframes seal{to{opacity:0;transform:scale(.6)}}
-@keyframes pulse{to{box-shadow:0 0 0 6px #2a1235,0 0 0 8px var(--gold),0 0 80px rgba(230,184,92,.8)}}
-@keyframes gone{to{visibility:hidden}}
+/* ---------- envelope intro ---------- */
+.gate{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;cursor:pointer;touch-action:none;
+  background:radial-gradient(90% 70% at 50% 45%,#4a1f55,#22102a 70%,#12051a);transition:opacity 1s ease .3s}
+.gate::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle,rgba(230,184,92,.18) 1.4px,transparent 1.8px) 0 0/26px 26px}
+.gate .t{position:relative;color:var(--gold);transition:opacity .5s}
+.gate .t.h{animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+.env{position:relative;width:min(84vw,380px);aspect-ratio:3/2;perspective:1100px;filter:drop-shadow(0 26px 40px rgba(0,0,0,.55));animation:hover 3.4s ease-in-out infinite alternate;transition:opacity .8s ease .2s}
+@keyframes hover{from{transform:translateY(-6px) rotate(-1deg)}to{transform:translateY(6px) rotate(1deg)}}
+.env>*{position:absolute}
+.env svg{display:block;width:100%;height:100%;overflow:visible}
+.env .back{inset:0;z-index:0}
+.env .card{left:5%;width:90%;top:9%;height:84%;z-index:2;background:#fff6e2;box-shadow:inset 0 0 0 5px #fff6e2,inset 0 0 0 6px #c9962f,inset 0 0 0 9px #fff6e2,inset 0 0 0 10px rgba(201,150,47,.5);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;text-align:center;padding:9% 6% 0;color:#5c0b18;transition:transform 1s cubic-bezier(.3,.7,.2,1) 1.05s,opacity .8s .2s}
+.card .c1{font:9px var(--cap);letter-spacing:.24em;text-transform:uppercase;color:#a8761f}
+.card .c2{font:clamp(34px,11vw,46px)/1.15 var(--script);color:#7a1020}
+.card .c3{font:italic 14px var(--serif);color:#5c0b18}
+.env .pocket{inset:0;z-index:3}
+.env .flap{inset:0;z-index:5;transform-origin:50% 0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.5,0,.2,1) .3s,z-index 0s .75s;pointer-events:none}
+.flap>svg{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flap .b{transform:rotateX(180deg)}
+.seal{left:50%;top:59%;width:21%;aspect-ratio:1;margin:-10.5% 0 0 -10.5%;z-index:7;border-radius:47% 53% 50% 50%/52% 48% 54% 46%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#e0394f,#b01028 45%,#6e0b19);box-shadow:inset 0 0 0 3px rgba(255,255,255,.12),inset 0 -4px 8px rgba(0,0,0,.35),0 4px 10px rgba(0,0,0,.5);
+  color:#f6dc9a;font:clamp(22px,7.4vw,30px)/1 var(--script);text-shadow:0 1px 2px rgba(0,0,0,.5);animation:beat 1.6s ease-in-out infinite;transition:opacity .35s,transform .35s}
+.seal::before{content:"";position:absolute;inset:11%;border-radius:50%;border:1.5px solid rgba(246,220,154,.55)}
+@keyframes beat{50%{transform:scale(1.07)}}
+.gate.open .seal{animation:none;opacity:0;transform:scale(1.5) rotate(18deg)}
+.gate.open .flap{transform:rotateX(180deg);z-index:1}
+.gate.open .card{transform:translateY(-64%)}
+.gate.open .t.h{opacity:0;animation:none}
+.gate.go{opacity:0;pointer-events:none}
+.gate.go .card{transform:translateY(-64%) scale(2.6);opacity:0}
+.gate.go .env{opacity:0}
+html:not(.opened) .hero *{animation-play-state:paused}
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;padding-top:clamp(90px,14vw,130px);padding-bottom:30px;
@@ -60,20 +77,20 @@ a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 @keyframes glow{from{opacity:.65}to{opacity:1}}
 .stage{container-type:inline-size;position:relative;z-index:2;width:min(100%,440px);margin-inline:auto;aspect-ratio:400/590}
 .stage .arch-l{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.stage .arch-l path{fill:none;stroke:var(--gold);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s ease 1.3s forwards}
-.stage .arch-l path:nth-child(2){stroke-width:1;animation-delay:1.6s}
-.stage .arch-l path:nth-child(3){stroke-width:1;stroke-dasharray:.004 .012;animation:fadein 1.5s ease 2.4s forwards;opacity:0}
+.stage .arch-l path{fill:none;stroke:var(--gold);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s ease .1s forwards}
+.stage .arch-l path:nth-child(2){stroke-width:1;animation-delay:.4s}
+.stage .arch-l path:nth-child(3){stroke-width:1;stroke-dasharray:.004 .012;animation:fadein 1.5s ease 1.2s forwards;opacity:0}
 .stage .arch-l path:first-child{stroke-width:2.4}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fadein{to{opacity:1;stroke-dashoffset:0}}
 .inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26cqw 15cqw 6cqw}
-.inner>*{opacity:0;animation:rise 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(1.7s + var(--i)*.28s)}
+.inner>*{opacity:0;animation:rise 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.4s + var(--i)*.28s)}
 @keyframes rise{from{opacity:0;transform:translateY(22px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
 .bism{font:700 clamp(15px,4.7cqw,21px)/1.85 Amiri,"Scheherazade New","Times New Roman",serif;color:var(--gold-hi);margin:0}
 .ref{font-size:clamp(8.5px,2.3cqw,10px);letter-spacing:.2em;color:var(--gold);margin:0 0 2.5cqw;opacity:.85}
 .invite{margin:0;font-size:clamp(13px,3.7cqw,17px);color:#e9d9e8;line-height:1.3}
 .nm{font:clamp(54px,21cqw,92px)/1.05 var(--script);margin:-.14em 0 -.1em;padding:.16em .25em .2em;
-  background:linear-gradient(100deg,#c98f2b 20%,#fff0b8 45%,#c98f2b 70%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise 1.1s cubic-bezier(.2,.7,.2,1) forwards,shine 5s linear infinite;animation-delay:calc(1.7s + var(--i)*.28s),0s}
+  background:linear-gradient(100deg,#c98f2b 20%,#fff0b8 45%,#c98f2b 70%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise 1.1s cubic-bezier(.2,.7,.2,1) forwards,shine 5s linear infinite;animation-delay:calc(.4s + var(--i)*.28s),0s}
 @keyframes shine{to{background-position:-250% 0}}
 .amp{font:italic 600 clamp(24px,8cqw,34px)/1 var(--serif);color:var(--gold);margin:-1cqw 0}
 .when{margin-top:3.5cqw;color:var(--gold-hi);font-size:clamp(10.5px,2.9cqw,13px);letter-spacing:.18em}
@@ -233,7 +250,7 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(230,184,92,.6)}70%,100%{box-shadow:0 0 0 14px rgba(230,184,92,0)}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .gate{display:none}.inner>*,.js .rv{opacity:1;transform:none;filter:none}
+  .inner>*,.js .rv{opacity:1;transform:none;filter:none}
   .draw,.stage .arch-l path{stroke-dashoffset:0}.mand .dot,.stage .arch-l path:nth-child(3){opacity:1}
   .nm{background-position:30% 0}
 }
@@ -241,7 +258,17 @@ html{scroll-snap-type:y mandatory;background:var(--plum)}
 </head>
 <body>
 
-<div class="gate" id="gate" aria-hidden="true"><i class="door l"></i><i class="door r"></i><div class="seal">T&amp;U</div></div>
+<div class="gate" id="gate" role="button" tabindex="0" aria-label="Open the invitation">
+  <div class="t cap">You are invited</div>
+  <div class="env">
+    <svg class="back" viewBox="0 0 300 200" aria-hidden="true"><rect width="300" height="200" rx="5" fill="#8a1425"/><rect x="5" y="5" width="290" height="190" rx="3" fill="none" stroke="rgba(230,184,92,.55)"/></svg>
+    <div class="card"><span class="c1">Wedding invitation</span><span class="c2">Taiba &amp; Usama</span><span class="c3">8 &middot; 10 &middot; 11 December 2026</span></div>
+    <svg class="pocket" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0L150 112L300 0V200H0Z" fill="#a41c30"/><path d="M0 200L120 98M300 200L180 98" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/><path d="M0 0L150 112L300 0" fill="none" stroke="rgba(230,184,92,.7)" stroke-width="1.6"/><rect x="1" y="1" width="298" height="198" rx="4" fill="none" stroke="rgba(230,184,92,.5)"/></svg>
+    <div class="flap"><svg class="f" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#b8263c" stroke="rgba(230,184,92,.8)" stroke-width="1.6"/><path d="M26 6L150 106L274 6" fill="none" stroke="rgba(230,184,92,.35)" stroke-dasharray="2 4"/></svg><svg class="b" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#6e0b19" stroke="rgba(230,184,92,.6)" stroke-width="1.6"/></svg></div>
+    <div class="seal">T&amp;U</div>
+  </div>
+  <div class="t h cap">Tap the seal to open</div>
+</div>
 
 <header class="hero g" id="top">
   <div class="garw"><svg id="gh" aria-hidden="true"></svg></div>
@@ -524,7 +551,13 @@ btn.onclick=()=>{if(!on){if(!ctx){ctx=new AC();master=ctx.createGain();master.ga
  btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
 document.addEventListener('visibilitychange',()=>{if(ctx&&on)document.hidden?ctx.suspend():ctx.resume()});
 })();
-const gate=document.getElementById('gate');gate.onclick=()=>{gate.remove();const b=document.getElementById('snd');if(b.getAttribute('aria-pressed')!=='true')b.click()};setTimeout(()=>gate.remove(),3000);
+const gate=document.getElementById('gate'),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const root=document.documentElement,unlock=()=>{root.classList.add('opened');root.style.overflow='';gate.remove()};
+root.style.overflow='hidden';
+function openGate(){if(gate.classList.contains('open'))return;gate.classList.add('open');const b=document.getElementById('snd');if(b.getAttribute('aria-pressed')!=='true')b.click();
+ setTimeout(()=>gate.classList.add('go'),2500);setTimeout(()=>root.classList.add('opened'),2700);setTimeout(unlock,3800)}
+gate.onclick=openGate;gate.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGate()}};
+if(rm)unlock();
 
 const T=new Date(2026,11,8,19,0,0);
 const z=n=>String(n).padStart(2,'0');
