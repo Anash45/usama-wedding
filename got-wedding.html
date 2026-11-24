@@ -123,6 +123,25 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
 .back{display:inline-block;margin-top:6px;color:var(--gold);text-decoration:none;border-bottom:1px solid currentColor;font:11px var(--cap);letter-spacing:.2em;text-transform:uppercase}
 .note{font-size:12px;opacity:.55;margin-top:14px}
 
+.env svg.perch{right:7%;top:-19%;width:17%;height:auto;z-index:8;transform-origin:50% 100%;animation:peck 3s ease-in-out infinite}
+@keyframes peck{0%,80%,100%{transform:rotate(0)}88%{transform:rotate(-8deg)}94%{transform:rotate(3deg)}}
+.gate.open .perch{animation:away 1.5s ease-in .05s forwards}
+@keyframes away{to{transform:translate(140px,-260px) scale(.5) rotate(-24deg);opacity:0}}
+.talk{margin:12px auto 0;max-width:26em}
+.talk p{margin:2px 0;font-style:italic;font-size:clamp(14px,4.2cqw,18px);color:var(--parch);opacity:0;animation:rise2 .9s ease forwards;animation-delay:calc(1s + var(--i)*.9s)}
+.talk b{font:600 10px var(--cap);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-right:8px;font-style:normal}
+.end .talk p{font-size:1em;animation:none;opacity:1}
+@keyframes rise2{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+html:not(.opened) .talk p{animation-play-state:paused}
+.fly{position:fixed;left:0;z-index:45;pointer-events:none;width:var(--w);animation:cross var(--d) linear forwards}
+.fly svg{display:block;width:100%;animation:bobfly 1.6s ease-in-out infinite alternate}
+.fly .wl{transform-box:fill-box;transform-origin:100% 100%;animation:fwl .34s ease-in-out infinite alternate}
+.fly .wr{transform-box:fill-box;transform-origin:0 100%;animation:fwr .34s ease-in-out infinite alternate}
+@keyframes cross{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
+@keyframes bobfly{to{transform:translateY(18px)}}
+@keyframes fwl{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+@keyframes fwr{from{transform:rotate(18deg)}to{transform:rotate(-18deg)}}
+
 /* chrome */
 .dots{position:fixed;z-index:50;right:max(10px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);display:grid;gap:12px;mix-blend-mode:difference;color:#fff}
 .dots a{display:block;width:9px;height:9px;border:1.5px solid currentColor;border-radius:50%;transition:transform .3s,background .3s}
@@ -153,7 +172,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
   .host{margin:8px 0 0;font-size:.9em}
   #snd span{display:none}#snd{padding:11px}
 }
-@media(max-width:819px) and (max-height:720px){.tag,.host,.oath{display:none}.art svg{width:min(100%,calc(30vh*.8));width:min(100%,calc(30dvh*.8))}}
+@media(max-width:819px) and (max-height:720px){.tag,.host,.oath,.talk{display:none}.art svg{width:min(100%,calc(30vh*.8));width:min(100%,calc(30dvh*.8))}}
 </style>
 </head>
 <body>
@@ -165,6 +184,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <div class="card"><span class="c1">By royal summons</span><span class="c2">Taiba &amp; Usama</span><span class="c3">8 &middot; 10 &middot; 11 December 2026</span></div>
     <svg class="pocket" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0L150 112L300 0V200H0Z" fill="#2a1115"/><path d="M0 200L120 98M300 200L180 98" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/><path d="M0 0L150 112L300 0" fill="none" stroke="rgba(201,162,39,.6)" stroke-width="1.6"/><path d="M1 0V199H299V0" fill="none" stroke="rgba(201,162,39,.4)"/></svg>
     <div class="flap"><svg class="f" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#35161b" stroke="rgba(201,162,39,.7)" stroke-width="1.6"/></svg><svg class="b" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#0e0507" stroke="rgba(201,162,39,.5)" stroke-width="1.6"/></svg></div>
+    <svg class="perch" viewBox="0 0 60 50" aria-hidden="true"><path fill="#050508" d="M4 22L16 18Q22 8 34 10Q46 12 52 26Q56 36 50 44L52 50L40 46Q30 48 22 42Q18 38 18 32L8 26Z"/><circle cx="19" cy="19" r="1.6" fill="#e8c874"/></svg>
     <div class="seal" role="button" tabindex="0" aria-label="Break the seal and open the invitation">T&amp;U</div>
   </div>
   <div class="t h cap">Break the seal</div>
@@ -181,7 +201,8 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <h1 class="big">The Wedding of</h1>
     <p class="names">Taiba &amp; Usama</p>
     <div class="when cap">8 &middot; 10 &middot; 11 December 2026 &middot; Faisalabad</div>
-    <p class="oath">Winter has come and so has love. Bread and salt shall be shared and guest right honoured. Kindly leave your daggers at the gate.</p>
+    <div class="talk"><p style="--i:0"><b>Maester</b> Winter is coming.</p><p style="--i:1"><b>Bride</b> So is the wedding.</p></div>
+    <p class="oath">Bread and salt shall be shared. Kindly leave your daggers at the gate.</p>
     <svg class="castle" viewBox="0 0 520 190" aria-hidden="true">
       <circle cx="260" cy="70" r="52" fill="#9fd0f0" opacity=".16"/><circle cx="260" cy="70" r="34" fill="#e8f4ff" opacity=".9"/>
       <g fill="#0b0305" stroke="rgba(201,162,39,.35)">
@@ -214,7 +235,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
           <path d="M0 390L90 320L170 380L250 305L340 380L400 345V500H0Z" fill="#17304a"/>
           <path d="M0 410Q100 392 200 404T400 398V500H0Z" fill="#e9f3fb"/><path d="M0 440Q120 424 230 436T400 430V500H0Z" fill="#cfe3f2"/>
           <g fill="#0f2c2a"><use href="#tr" transform="translate(52 402) scale(.9)"/><use href="#tr" transform="translate(96 410) scale(.65)"/><use href="#tr" transform="translate(352 404) scale(.9)"/><use href="#tr" transform="translate(312 412) scale(.62)"/></g>
-          <g transform="translate(190 316) scale(1.15)" fill="#0a111b"><path d="M8 84L12 58Q14 46 24 42Q26 32 22 22L20 8L30 18Q38 22 44 16L50 12L48 24Q44 30 40 36Q56 40 62 54Q68 66 66 84L58 84L56 68L48 66L48 84L40 84L40 70L26 72L24 84Z"/></g>
+          <g transform="translate(176 312) scale(.86)" fill="#0a111b"><path d="M6 96Q2 74 16 60Q18 46 32 40Q42 36 46 28Q48 22 50 14L48 2L56 8Q64 4 72 8L92 -4L88 10Q80 18 70 20Q66 28 64 36Q70 48 66 62L68 96L56 96L54 76L42 78Q36 86 38 96Z"/><circle cx="64" cy="12" r="1.8" fill="#9fd0f0"/></g>
           <g><path d="M44 440V392" stroke="#5a3a1a" stroke-width="5"/><g class="flame"><path d="M44 388c-12-12-2-22 0-32 2 10 14 20 0 32z" fill="#ff8a1f"/><path d="M44 382c-6-6-1-11 0-16 1 5 6 10 0 16z" fill="#fff0a0"/></g>
             <path d="M356 440V392" stroke="#5a3a1a" stroke-width="5"/><g class="flame" style="animation-delay:-.12s"><path d="M356 388c-12-12-2-22 0-32 2 10 14 20 0 32z" fill="#ff8a1f"/><path d="M356 382c-6-6-1-11 0-16 1 5 6 10 0 16z" fill="#fff0a0"/></g></g>
         </g>
@@ -224,7 +245,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <div class="txt">
       <p class="eyebrow cap reveal">Night the First &middot; Bride's house</p>
       <h2 class="reveal" style="--dd:.1s">Winter Feast<small>The Mehndi</small></h2>
-      <p class="tag reveal" style="--dd:.15s">Henna and dholki by torchlight. The long night is warmer with bread, salt and dancing.</p>
+      <p class="tag reveal" style="--dd:.15s">The night is dark and full of dholki. Henna by torchlight, bread, salt and dancing.</p>
       <div class="date reveal" style="--dd:.2s"><span class="n">08</span><span class="m"><b>December</b>Tuesday &middot; 2026</span></div>
       <dl class="info reveal" style="--dd:.25s">
         <div><dt>Time</dt><dd>7:00 PM onwards<small>Dinner at 9:30 PM</small></dd></div>
@@ -258,7 +279,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <div class="txt">
       <p class="eyebrow cap reveal">Night the Second &middot; Groom's side</p>
       <h2 class="reveal" style="--dd:.1s">The Red Wedding<small>The Baraat</small></h2>
-      <p class="tag reveal" style="--dd:.15s">Banners rise, war drums sound and the vows are sworn before the whole realm. Mind the doors.</p>
+      <p class="tag reveal" style="--dd:.15s">The North remembers, and so does the groom. Drums sound, vows are sworn. Mind the doors.</p>
       <div class="date reveal" style="--dd:.2s"><span class="n">10</span><span class="m"><b>December</b>Thursday &middot; 2026</span></div>
       <dl class="info reveal" style="--dd:.25s">
         <div><dt>Time</dt><dd>Baraat arrives 7:30 PM<small>Nikah 8:30 PM &middot; Rukhsati 11:00 PM</small></dd></div>
@@ -278,6 +299,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
           <path d="M60 60q20-24 42-8-14 4-18 16 14-4 22 4-24 6-34-4z" fill="#1a0c08" opacity=".7"/><path d="M300 90q22-26 46-6-14 4-18 16 14-4 22 4-26 6-36-6z" fill="#1a0c08" opacity=".7"/>
           <g transform="rotate(-56 200 392)"><path d="M195 392L200 256L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="300" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(-44 200 392)"><path d="M195 392L200 229L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="305" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(-32 200 392)"><path d="M195 392L200 203L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="310" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(-20 200 392)"><path d="M195 392L200 176L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="314" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(-8 200 392)"><path d="M195 392L200 150L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="319" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(8 200 392)"><path d="M195 392L200 150L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="319" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(20 200 392)"><path d="M195 392L200 176L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="314" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(32 200 392)"><path d="M195 392L200 203L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="310" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(44 200 392)"><path d="M195 392L200 229L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="305" width="28" height="5" rx="2" fill="#5a5f68"/></g><g transform="rotate(56 200 392)"><path d="M195 392L200 256L205 392Z" fill="#9aa0aa" stroke="#d3d8e0" stroke-width="1"/><rect x="186" y="300" width="28" height="5" rx="2" fill="#5a5f68"/></g>
           <path d="M128 392H272V438H128Z" fill="#2a2a30" stroke="#ffb347" stroke-width="2"/><path d="M104 438H296V470H104Z" fill="#1d1d22" stroke="#ffb347" stroke-width="2"/><path d="M150 392V420M200 392V420M250 392V420" stroke="#ffb347" stroke-width="1.5" opacity=".6"/>
+          <g stroke="#ffb347" stroke-width="1.3"><ellipse cx="112" cy="422" rx="11" ry="15" fill="#241812"/><path d="M104 418q8 6 16 0M104 426q8 6 16 0" fill="none"/><ellipse cx="288" cy="422" rx="11" ry="15" fill="#1c2a1e"/><path d="M280 418q8 6 16 0M280 426q8 6 16 0" fill="none"/></g>
           <g><path d="M52 470V420" stroke="#5a5f68" stroke-width="6"/><path d="M34 420H70L64 404H40Z" fill="#3a3a42"/><g class="flame"><path d="M52 404c-16-16-2-28 0-44 2 14 18 28 0 44z" fill="#ff8a1f"/><path d="M52 396c-8-8-1-14 0-22 1 8 8 14 0 22z" fill="#fff0a0"/></g>
             <path d="M348 470V420" stroke="#5a5f68" stroke-width="6"/><path d="M330 420H366L360 404H336Z" fill="#3a3a42"/><g class="flame" style="animation-delay:-.1s"><path d="M348 404c-16-16-2-28 0-44 2 14 18 28 0 44z" fill="#ff8a1f"/><path d="M348 396c-8-8-1-14 0-22 1 8 8 14 0 22z" fill="#fff0a0"/></g></g>
         </g>
@@ -287,7 +309,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <div class="txt">
       <p class="eyebrow cap reveal">Night the Third &middot; Groom's family</p>
       <h2 class="reveal" style="--dd:.1s">The Throne Feast<small>The Walima</small></h2>
-      <p class="tag reveal" style="--dd:.15s">Goblets raised and a grand dawat, with a toast to the newlyweds. The whole realm drinks to them.</p>
+      <p class="tag reveal" style="--dd:.15s">A host always pays his debts, so dinner is on us. Goblets raised to the realm and the newlyweds.</p>
       <div class="date reveal" style="--dd:.2s"><span class="n">11</span><span class="m"><b>December</b>Friday &middot; 2026</span></div>
       <dl class="info reveal" style="--dd:.25s">
         <div><dt>Time</dt><dd>Reception 8:00 PM<small>Dinner at 9:30 PM</small></dd></div>
@@ -302,6 +324,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
   <div>
     <div class="cap reveal" style="color:var(--gold)">The realm awaits your raven</div>
     <h2 class="reveal">Raise your cup</h2>
+    <div class="talk reveal" style="margin-bottom:6px"><p style="--i:0"><b>Maester</b> Winter is coming.</p><p style="--i:1"><b>Guest</b> Then we shall bring coats, and gifts.</p></div>
     <div class="cap reveal" style="font-size:11px;color:var(--gold)">The first feast begins in</div>
     <div class="cd reveal"><div><b id="cd-d">00</b><span>Days</span></div><div><b id="cd-h">00</b><span>Hours</span></div><div><b id="cd-m">00</b><span>Mins</span></div><div><b id="cd-s">00</b><span>Secs</span></div></div>
     <div class="rsvp reveal"><b>Send your raven by 30 November 2026</b><span>Mr. Tariq Khan, bride's father<br>+92 300 1234567</span><span>Mr. Saleem Malik, groom's father<br>+92 321 7654321</span></div>
@@ -335,6 +358,12 @@ addEventListener('touchmove',e=>{if(!live())return;const d=y0>e.touches[0].clien
 addEventListener('touchend',e=>{if(!hold)return;const dy=y0-e.changedTouches[0].clientY;if(Math.abs(dy)>30)go(dy>0?1:-1)});
 addEventListener('keydown',e=>{if(!live())return;const k={ArrowDown:1,PageDown:1,' ':1,ArrowUp:-1,PageUp:-1}[e.key];if(k&&edge(k)){e.preventDefault();go(k)}});
 })();
+// a raven crosses the sky now and then; a dragon on the throne page
+const RAVEN='<svg viewBox="0 0 120 60" aria-hidden="true"><g fill="#07070b"><path class="wl" d="M58 32Q40 6 2 12L9 16L4 22L13 24L10 30L21 30L21 36Q40 36 58 42Z"/><path class="wr" d="M62 32Q80 6 118 12L111 16L116 22L107 24L110 30L99 30L99 36Q80 36 62 42Z"/><path d="M48 34Q58 26 70 30L88 28L100 32L88 36Q80 46 64 44L50 50L38 56L44 42Z"/></g></svg>',
+ DRAGON='<svg viewBox="0 0 160 90" aria-hidden="true"><g fill="#120a0a"><path class="wl" style="opacity:.75" d="M96 58Q92 24 66 10L72 26Q60 18 50 20L62 34Q50 32 42 40L62 48Q80 50 96 58Z"/><path class="wl" d="M84 52Q80 20 54 6L60 22Q48 14 38 16L50 30Q38 28 30 36L50 44Q66 46 84 52Z"/><path d="M12 72Q46 68 78 58Q98 52 108 38Q112 28 110 20L120 14L134 18L126 24L120 26Q120 42 102 60Q80 74 50 76Q32 80 12 72Z"/></g><circle cx="124" cy="19" r="1.6" fill="#ff8a1f"/></svg>';
+function fly(){if(!root.classList.contains('opened')||document.hidden)return;const d=page===3,e=document.createElement('div');e.className='fly';e.innerHTML=d?DRAGON:RAVEN;
+ e.style.cssText=`--w:${d?(innerWidth<600?110:170):(innerWidth<600?64:90)}px;--d:${R(8,11)}s;top:${R(6,34)}vh`;e.addEventListener('animationend',ev=>{if(ev.target===e)e.remove()});document.body.append(e)}
+setTimeout(function loop(){fly();setTimeout(loop,R(9000,16000))},6000);
 // countdown
 const T=new Date(2026,11,8,19,0,0),z=n=>String(n).padStart(2,'0');
 function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));[['d',86400],['h',3600],['m',60],['s',1]].forEach(([k,u])=>{$('#cd-'+k).textContent=z(Math.floor(s/u));s%=u})}tick();setInterval(tick,1000);
