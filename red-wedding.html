@@ -295,7 +295,7 @@ h2 small{display:block;font:14px var(--cap);letter-spacing:.3em;text-transform:u
     <div class="cd reveal"><div><b id="cd-d">00</b><span>Days</span></div><div><b id="cd-h">00</b><span>Hours</span></div><div><b id="cd-m">00</b><span>Mins</span></div><div><b id="cd-s">00</b><span>Secs</span></div></div>
     <div class="rsvp reveal"><b>Send your raven by 30 November 2026</b><span>Mr. Tariq Khan, bride's father<br>+92 300 1234567</span><span>Mr. Saleem Malik, groom's father<br>+92 321 7654321</span></div>
     <a class="back" href="index.html">The traditional invitation</a>
-    <p class="note">A fan-made parody. Not affiliated with HBO or the makers of Game of Thrones. Names, venues and numbers are samples.</p>
+    <p class="note">A fan-made parody. Not affiliated with HBO or the makers of Game of Thrones. Music: “The Rains of Castamere (Red Wedding Edition)” by Daniel Becker, supplied by the page owner. Names, venues and numbers are samples.</p>
   </div>
 </footer>
 
@@ -327,33 +327,13 @@ addEventListener('keydown',e=>{if(!live())return;const k={ArrowDown:1,PageDown:1
 const T=new Date(2026,11,8,19,0,0),z=n=>String(n).padStart(2,'0');
 function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));[['d',86400],['h',3600],['m',60],['s',1]].forEach(([k,u])=>{$('#cd-'+k).textContent=z(Math.floor(s/u));s%=u})}tick();setInterval(tick,1000);
 
-// Original dirge, synthesised live (not any film or show score): war drums, a low drone, a slow cello line and a tolling bell. Drums swell page by page.
-(()=>{const btn=$('#snd'),lab=$('#snd-t'),AC=window.AudioContext||window.webkitAudioContext;if(!AC){btn.hidden=true;return}
-let ctx,master,noise,timer,step=0,next=0,on=false,drone;
-const BPM=54,SD=60/BPM/2,ROOT=146.83,DRUM='D.d.D.d.',
- MEL=[[0,7,4],[4,5,2],[6,3,2],[8,2,6],[14,0,2],[16,3,4],[20,2,2],[22,0,2],[24,-1,4],[28,0,4]],
- f=s=>ROOT*2**(s/12);
-const env=(g,t,a,d,pk)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)};
-const osc=(type,fr,t,dur,dest,det=0)=>{const o=ctx.createOscillator();o.type=type;o.frequency.value=fr;o.detune.value=det;o.connect(dest);o.start(t);o.stop(t+dur);return o};
-function drum(t,g){const o=ctx.createOscillator(),a=ctx.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(42,t+.18);env(a,t,.003,.7,g);o.connect(a).connect(master);o.start(t);o.stop(t+.8);
- const s=ctx.createBufferSource(),lp=ctx.createBiquadFilter(),b=ctx.createGain();s.buffer=noise;lp.type='lowpass';lp.frequency.value=700;env(b,t,.002,.12,g*.4);s.connect(lp).connect(b).connect(master);s.start(t);s.stop(t+.2)}
-function cello(t,fr,d,g){const a=ctx.createGain(),lp=ctx.createBiquadFilter(),l=ctx.createOscillator(),lg=ctx.createGain();lp.type='lowpass';lp.frequency.value=950;l.frequency.value=5;lg.gain.value=fr*.006;
- const o=osc('sawtooth',fr,t,d+.4,lp),o2=osc('sawtooth',fr,t,d+.4,lp,7);l.connect(lg).connect(o.frequency);l.start(t);l.stop(t+d+.4);
- a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.25);a.gain.setValueAtTime(g,t+d*.8);a.gain.linearRampToValueAtTime(0,t+d+.3);lp.connect(a).connect(master)}
-function bell(t,g){[1,2.76,5.4].forEach((m,i)=>{const a=ctx.createGain();env(a,t,.005,4.5/(i+1),g/(i+1));osc('sine',196*m,t,5,a);a.connect(master)})}
-function pad(t,d,g){const lp=ctx.createBiquadFilter(),a=ctx.createGain();lp.type='lowpass';lp.frequency.value=500;a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+1.5);a.gain.linearRampToValueAtTime(0,t+d);[f(-12),f(-5),f(3-12)].forEach(x=>osc('triangle',x,t,d,lp));lp.connect(a).connect(master)}
-function sched(){while(next<ctx.currentTime+.2){const s=step%32,k=DRUM[s%8],bar=Math.floor(step/8),lvl=.45+.12*page;
- if(k!=='.')drum(next,(k==='D'?.9:.5)*lvl);
- MEL.forEach(([st,sm,len])=>{if(st===s)cello(next,f(sm),len*SD,.16)});
- if(s===0)pad(next,SD*32,.07);
- if(s===0&&bar%4===0)bell(next,.09);
- next+=SD;step++}}
-btn.onclick=()=>{if(!on){if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=0;const c=ctx.createDynamicsCompressor();master.connect(c).connect(ctx.destination);
-  noise=ctx.createBuffer(1,ctx.sampleRate*.3,ctx.sampleRate);const n=noise.getChannelData(0);for(let i=0;i<n.length;i++)n[i]=Math.random()*2-1}
-  ctx.resume();step=0;next=ctx.currentTime+.1;timer=setInterval(sched,40);master.gain.setTargetAtTime(.34,ctx.currentTime,.5);on=true}
- else{master.gain.setTargetAtTime(0,ctx.currentTime,.15);on=false;setTimeout(()=>{if(!on)clearInterval(timer)},700)}
- btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
-document.addEventListener('visibilitychange',()=>{if(ctx&&on)document.hidden?ctx.suspend():ctx.resume()});
+// Soundtrack: one looping track for every page, fades in on the first tap and can be stopped with the button
+(()=>{const btn=$('#snd'),lab=$('#snd-t'),au=new Audio('red-wedding-theme.m4a');au.loop=true;au.preload='auto';au.volume=0;let on=false,fade;
+const ramp=to=>{clearInterval(fade);fade=setInterval(()=>{au.volume=Math.max(0,Math.min(1,au.volume+(to>au.volume?.03:-.05)));if(Math.abs(au.volume-to)<.04)au.volume=to},60);
+ // iOS keeps the volume fixed, so finish on a timer instead of waiting for the fade
+ setTimeout(()=>{clearInterval(fade);if(!to&&!on)au.pause()},1600)};
+btn.onclick=()=>{on=!on;if(on){au.play().catch(()=>{});ramp(.6)}else ramp(0);btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
+document.addEventListener('visibilitychange',()=>{if(on)document.hidden?au.pause():au.play().catch(()=>{})});
 })();
 
 // envelope: seal slides 25%, flap flips, card slides out, then zoom-fade
