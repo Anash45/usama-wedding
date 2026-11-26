@@ -3,7 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}.rsvp em{font-style:italic;opacity:.85;margin-top:-6px}
+.ppl{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.ppl a{display:grid;gap:2px;padding:9px 6px;text-decoration:none;border:1px solid rgba(230,184,92,.3);border-radius:4px;background:rgba(0,0,0,.18)}
+.ppl a span:first-child{font-size:1.1em;color:var(--ivory)}
+.ppl a span+span{font:12px var(--cap);letter-spacing:.1em;color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.info.tl div{grid-template-columns:minmax(104px,128px) minmax(0,1fr)}
+@media(max-width:819px){
+  .info.tl{grid-template-columns:1fr;text-align:left}
+  .info.tl div{grid-template-columns:100px minmax(0,1fr);padding:5px 0;gap:0 10px;border-bottom:1px dashed var(--line)}
+  .info.tl div:last-child{border:0}
+  .info.tl dt{line-height:1.45;font-size:10px;letter-spacing:.12em}
+  .info.tl dd{font-size:.86em}
+  .baraat .tag{display:none}
+  .fin .rsvp{font-size:1em}.ppl a span:first-child{font-size:1em}
+}
+</style>
 <title>Taiba &amp; Usama Shaadi</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" id="fav" type="image/svg+xml" href="data:,">
@@ -22,6 +37,7 @@
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--plum);color:var(--ivory);font-family:var(--serif);font-size:19px;line-height:1.5;overflow-x:hidden}
 a{color:inherit}
+[hidden]{display:none!important}
 a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 .g{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .cap{font-family:var(--cap);text-transform:uppercase;letter-spacing:.22em;font-size:12px}
@@ -110,9 +126,9 @@ html:not(.opened) .hero *{animation-play-state:paused}
 .chip b{font:600 44px/1 var(--cap)}
 .chip small{display:block;font:12px var(--cap);letter-spacing:.18em;text-transform:uppercase;opacity:.8}
 .chip em{font:42px/1.1 var(--script);font-style:normal}
-.c-m{background:#ffe27a;color:#2b3a12;box-shadow:inset 0 0 0 3px #1c6b34}
+.c-m{background:#0d3f2e;color:#f7ecd0;box-shadow:inset 0 0 0 3px #e8c872}
 .c-r{background:#7a1020;color:#fbe9c9;box-shadow:inset 0 0 0 3px #e6b85c}
-.c-w{background:#e8f3ee;color:#0f3d38;box-shadow:inset 0 0 0 3px #c9857a}
+.c-w{background:#081c29;color:#f3ecdc;box-shadow:inset 0 0 0 3px #e9cf9a}
 
 /* ---------- function sections ---------- */
 .fn{position:relative;overflow:hidden;color:var(--ink);padding-block:clamp(84px,10vw,130px) clamp(70px,9vw,110px);
@@ -121,23 +137,23 @@ html:not(.opened) .hero *{animation-play-state:paused}
   background:radial-gradient(circle at 20px 0,var(--prev) 19px,transparent 20px) 0 0/40px 22px repeat-x}
 .fn::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--jo,.35);
   background:radial-gradient(circle,var(--accent) 1.2px,transparent 1.6px) 0 0/30px 30px;mix-blend-mode:soft-light}
-.mehndi{--bg:#fff1b8;--bg2:#ffdf6e;--ink:#2d3a14;--accent:#1c6b34;--accent2:#d6336c;--line:rgba(28,107,52,.35);--card:rgba(255,255,255,.55);--petal:#f28c1c;--prev:#22102a;--henna:#6a3418}
-.baraat{--bg:#5c0b18;--bg2:#8a1425;--ink:#fbe9c9;--accent:#e6b85c;--accent2:#ff9aa2;--line:rgba(230,184,92,.4);--card:rgba(0,0,0,.24);--petal:#e6b85c;--prev:#fff1b8;--jo:.25}
-.walima{--bg:#e6f2ed;--bg2:#fbece8;--ink:#0f3d38;--accent:#0e6b5e;--accent2:#c9857a;--line:rgba(14,107,94,.3);--card:rgba(255,255,255,.7);--petal:#e7a4a0;--prev:#5c0b18}
+.mehndi{--bg:#0d3f2e;--bg2:#17674b;--ink:#f7ecd0;--accent:#e8c872;--accent2:#f2c6a0;--line:rgba(232,200,114,.4);--card:rgba(0,0,0,.24);--petal:#e8c872;--prev:#22102a;--henna:#6a3418}
+.baraat{--bg:#4a0a15;--bg2:#7a1124;--ink:#fbe9c9;--accent:#e6b85c;--accent2:#ff9aa2;--line:rgba(230,184,92,.4);--card:rgba(0,0,0,.24);--petal:#e6b85c;--prev:#0d3f2e;--jo:.25}
+.walima{--bg:#081c29;--bg2:#12394a;--ink:#f3ecdc;--accent:#e9cf9a;--accent2:#eab0a4;--line:rgba(233,207,154,.4);--card:rgba(0,0,0,.26);--petal:#e7a4a0;--prev:#4a0a15}
 .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(34px,6vw,84px);align-items:center;max-width:1080px;margin-inline:auto}
 .rev .art{order:2}
 @media(max-width:819px){.wrap{grid-template-columns:minmax(0,1fr)}.rev .art{order:0}}
 .txt{min-width:0}
 .eyebrow{color:var(--accent2);margin:0 0 4px}
 .fn h2{font:clamp(78px,15vw,128px)/1.15 var(--script);margin:0 0 4px;padding:.06em .18em .12em;margin-left:-.18em;width:fit-content;max-width:100%;
-  background:linear-gradient(95deg,var(--accent),var(--accent2) 60%,var(--accent));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
+  background:linear-gradient(100deg,#b88a24 20%,#fff0b8 45%,#b88a24 70%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
 .baraat h2{background-image:linear-gradient(100deg,#c98f2b 20%,#fff0b8 45%,#c98f2b 70%);background-size:250% 100%}
 .tag{font-style:italic;font-size:1.25em;margin:0 0 22px;max-width:30em}
 .date{display:flex;align-items:center;gap:18px;margin-bottom:24px}
 .date .n{font:600 clamp(64px,12vw,92px)/1 var(--cap);color:var(--accent);font-variant-numeric:tabular-nums}
 .date .m{border-left:2px solid var(--accent2);padding-left:16px;font-size:13px}
 .date .m b{display:block;font:600 22px/1.2 var(--cap);letter-spacing:.16em;text-transform:uppercase}
-.info{margin:0;padding:6px 22px;background:var(--card);border:1px solid var(--line);border-radius:6px 6px 26px 6px;display:grid}
+.info{margin:0;padding:6px 22px;background:var(--card);border:1px solid var(--line);border-radius:6px 6px 26px 6px;display:grid;outline:1px solid var(--line);outline-offset:5px}
 .info div{display:grid;grid-template-columns:minmax(78px,96px) minmax(0,1fr);gap:4px 18px;padding:14px 0;border-bottom:1px dashed var(--line)}
 .info div:last-child{border:0}
 .info dt{font:12px/1.9 var(--cap);letter-spacing:.2em;text-transform:uppercase;color:var(--accent2)}
@@ -150,7 +166,7 @@ html:not(.opened) .hero *{animation-play-state:paused}
 .arch{position:relative;width:min(100%,430px);margin-inline:auto;aspect-ratio:4/5;border-radius:999px 999px 18px 18px;overflow:hidden;
   box-shadow:inset 0 0 0 9px var(--ring),inset 0 0 0 11px var(--ring2),0 0 0 6px var(--bg),0 0 0 8px var(--accent),0 34px 60px -24px rgba(0,0,0,.5)}
 .pr{position:absolute}
-.m-arch{--ring:#1c6b34;--ring2:#ffe27a;background:radial-gradient(circle at 50% 42%,#fff9dc 0 28%,#ffd75e 66%,#f4a93c)}
+.m-arch{--ring:#0d3f2e;--ring2:#e8c872;background:radial-gradient(circle at 50% 42%,#fff9dc 0 28%,#ffd75e 66%,#f4a93c)}
 .r-arch{--ring:#3a0610;--ring2:#e6b85c;background:radial-gradient(circle at 50% 56%,#c0304a,#7a1020 58%,#3a0610)}
 .w-arch{--ring:#0b4a44;--ring2:#e7a4a0;background:linear-gradient(180deg,#06272e,#0b4a44 55%,#1d8a7a)}
 .mand{position:absolute;left:7%;top:6%;width:86%;animation:rot 120s linear infinite}
@@ -187,7 +203,7 @@ html:not(.opened) .hero *{animation-play-state:paused}
 
 /* ---------- finale ---------- */
 .fin{position:relative;overflow:hidden;text-align:center;padding-block:clamp(90px,11vw,130px) 56px;background:radial-gradient(100% 80% at 50% 0,#4a1f55,var(--plum) 70%)}
-.fin::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;background:radial-gradient(circle at 20px 0,#e6f2ed 19px,transparent 20px) 0 0/40px 22px repeat-x}
+.fin::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;background:radial-gradient(circle at 20px 0,#081c29 19px,transparent 20px) 0 0/40px 22px repeat-x}
 .fin>div{position:relative;z-index:2;max-width:620px;margin-inline:auto}
 .fin h2{font:clamp(54px,12vw,96px)/1.1 var(--script);margin:0 0 12px;color:var(--gold-hi)}
 .fin p{margin:0 0 18px}
@@ -228,7 +244,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   .info dt{line-height:1.5;font-size:10px}.info dd{font-size:.88em;line-height:1.25}
   .host{margin:8px 0 0;font-size:.9em}
 }
-@media(max-width:819px) and (max-height:720px){.tag,.host{display:none}.arch{width:min(100%,calc(33vh*.8));width:min(100%,calc(33dvh*.8))}.hero{padding-top:84px}}
+@media(max-width:819px) and (max-height:720px){.info.tl div{padding:3px 0}.tag,.host{display:none}.arch{width:min(100%,calc(33vh*.8));width:min(100%,calc(33dvh*.8))}.hero{padding-top:84px}}
 
 .glit{position:fixed;inset:0;z-index:40;pointer-events:none}
 .glit .tw{filter:drop-shadow(0 0 3px rgba(255,205,90,.95))}
@@ -279,7 +295,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
     <div class="inner">
       <p class="bism" style="--i:0" lang="ar" dir="rtl">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً</p>
       <p class="ref cap" style="--i:0">Surah Ar-Rum &middot; 30:21</p>
-      <p class="invite" style="--i:1">The Khan and Malik families joyfully invite you to celebrate the wedding of</p>
+      <p class="invite" style="--i:1">Mr. &amp; Mrs. Liaqat Ali joyfully invite you to celebrate the wedding of</p>
       <h1 class="nm" style="--i:2">Taiba</h1>
       <div class="amp" style="--i:3">&amp;</div>
       <p class="nm" style="--i:4">Usama</p>
@@ -289,7 +305,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   </div>
   <a class="cue" href="#mehndi">Swipe up</a>
 </header>
-<button id="snd" type="button" aria-pressed="false" aria-label="Play wedding music"><svg viewBox="0 0 18 16" aria-hidden="true"><rect x="0" y="0" width="3" height="16" rx="1.5"/><rect x="5" y="0" width="3" height="16" rx="1.5"/><rect x="10" y="0" width="3" height="16" rx="1.5"/><rect x="15" y="0" width="3" height="16" rx="1.5"/></svg><span id="snd-t">Tap for music</span></button>
+<button id="snd" type="button" hidden aria-pressed="false" aria-label="Play wedding music"><svg viewBox="0 0 18 16" aria-hidden="true"><rect x="0" y="0" width="3" height="16" rx="1.5"/><rect x="5" y="0" width="3" height="16" rx="1.5"/><rect x="10" y="0" width="3" height="16" rx="1.5"/><rect x="15" y="0" width="3" height="16" rx="1.5"/></svg><span id="snd-t">Tap for music</span></button>
 <div class="glit" id="glit" aria-hidden="true"></div>
 <nav class="dots" aria-label="Pages"><a href="#top" title="Invitation"></a><a href="#mehndi" title="Mehndi"></a><a href="#baraat" title="Baraat"></a><a href="#walima" title="Walima"></a><a href="#rsvp" title="RSVP"></a></nav>
 
@@ -310,15 +326,15 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
       </div>
     </div>
     <div class="txt">
-      <p class="eyebrow cap rv">Function One &middot; Bride's family</p>
+      <p class="eyebrow cap rv">Function One</p>
       <h2 class="rv" style="--dd:.1s">Mehndi</h2>
-      <p class="tag rv" style="--dd:.15s">An evening of henna, dholki and dancing, drenched in marigold and sunshine yellow.</p>
+      <p class="tag rv" style="--dd:.15s">Kindly arrive on time. As per government and venue rules, the event must conclude by 10:00 PM.</p>
       <div class="date rv" style="--dd:.2s"><span class="n">08</span><span class="m"><b>December</b>Tuesday &middot; 2026</span></div>
       <dl class="info rv" style="--dd:.25s">
-        <div><dt>Time</dt><dd>7:00 PM onwards<small>Dinner served at 9:30 PM</small></dd></div>
-        <div><dt>Venue</dt><dd>Bagh-e-Gulzar Farmhouse<small>Canal Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Bagh-e-Gulzar+Farmhouse+Canal+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
+        <div><dt>Time</dt><dd>6:00 PM &ndash; 10:00 PM<small>Event concludes at 10:00 PM</small></dd></div>
+        <div><dt>Venue</dt><dd>The Marina Event Complex<small>Round Hall &middot; Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Marina+Event+Complex+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
       </dl>
-      <p class="host rv">Hosted by Mr. &amp; Mrs. Tariq Khan</p>
+      <p class="host rv">Hosted by Mr. &amp; Mrs. Liaqat Ali</p>
     </div>
   </div>
 </section>
@@ -342,15 +358,16 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
       </div>
     </div>
     <div class="txt">
-      <p class="eyebrow cap rv">Function Two &middot; Nikah &amp; send-off</p>
+      <p class="eyebrow cap rv">Function Two</p>
       <h2 class="rv" style="--dd:.1s">Baraat</h2>
-      <p class="tag rv" style="--dd:.15s">The groom's grand procession, the nikah and the tender farewell, in crimson and old gold.</p>
+      <p class="tag rv" style="--dd:.15s">The groom's procession, from sehra bandi at home to the grand baraat.</p>
       <div class="date rv" style="--dd:.2s"><span class="n">10</span><span class="m"><b>December</b>Thursday &middot; 2026</span></div>
-      <dl class="info rv" style="--dd:.25s">
-        <div><dt>Time</dt><dd>Baraat arrives 7:30 PM<small>Nikah 8:30 PM &middot; Rukhsati 11:00 PM</small></dd></div>
-        <div><dt>Venue</dt><dd>Shalimar Grand Marquee<small>Satiana Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Shalimar+Grand+Marquee+Satiana+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
+      <dl class="info tl rv" style="--dd:.25s">
+        <div><dt>4:00 &ndash; 5:00 PM</dt><dd>Sehra Bandi<small>At home &middot; Ismail City, Daewoo Road</small><a class="map" href="https://maps.app.goo.gl/kxZhmPbuZTVLQ6BS8" target="_blank" rel="noopener">Map</a></dd></div>
+        <div><dt>5:30 PM</dt><dd>Baraat departs<small>From home</small></dd></div>
+        <div><dt>6:00 &ndash; 10:00 PM</dt><dd>Baraat at The Marina Event Complex<small>Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Marina+Event+Complex+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
       </dl>
-      <p class="host rv">Hosted by Mr. &amp; Mrs. Tariq Khan</p>
+      <p class="host rv">Hosted by Mr. &amp; Mrs. Liaqat Ali</p>
     </div>
   </div>
 </section>
@@ -376,15 +393,15 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
       </div>
     </div>
     <div class="txt">
-      <p class="eyebrow cap rv">Function Three &middot; Groom's family</p>
+      <p class="eyebrow cap rv">Function Three</p>
       <h2 class="rv" style="--dd:.1s">Walima</h2>
-      <p class="tag rv" style="--dd:.15s">A blessed dawat to seal the celebrations, in emerald, ivory and rose.</p>
+      <p class="tag rv" style="--dd:.15s">A blessed dawat to seal the celebrations.</p>
       <div class="date rv" style="--dd:.2s"><span class="n">11</span><span class="m"><b>December</b>Friday &middot; 2026</span></div>
       <dl class="info rv" style="--dd:.25s">
-        <div><dt>Time</dt><dd>Reception 8:00 PM<small>Dinner served at 9:30 PM</small></dd></div>
-        <div><dt>Venue</dt><dd>The Royal Palm Banquet<small>Susan Road, Faisalabad</small><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=The+Royal+Palm+Banquet+Susan+Road+Faisalabad" target="_blank" rel="noopener">View map</a></dd></div>
+        <div><dt>Time</dt><dd>To be announced<small>Details will follow</small></dd></div>
+        <div><dt>Venue</dt><dd>To be announced<small>Faisalabad</small></dd></div>
       </dl>
-      <p class="host rv">Hosted by Mr. &amp; Mrs. Saleem Malik</p>
+      <p class="host rv">Hosted by Mr. &amp; Mrs. Liaqat Ali</p>
     </div>
   </div>
 </section>
@@ -400,15 +417,18 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
     <a class="chip c-r rv" href="#baraat" style="--dd:.12s"><b>10</b><span><small>Thursday</small><em>Baraat</em></span></a>
     <a class="chip c-w rv" href="#walima" style="--dd:.24s"><b>11</b><span><small>Friday</small><em>Walima</em></span></a>
   </div>
-    <p class="rv sm">Your presence and prayers will make our three days complete. Please let us know which celebrations you will attend.</p>
     <div class="rsvp rv">
-      <b>Kindly reply by 30 November 2026</b>
-      <span>Mr. Tariq Khan, bride's father &middot; +92 300 1234567</span>
-      <span>Mr. Saleem Malik, groom's father &middot; +92 321 7654321</span>
+      <b>Eagerly waiting for you</b><em>All family members</em>
+      <div class="ppl">
+        <a href="tel:03027670053"><span>Liaqat Ali</span><span>0302 7670053</span></a>
+        <a href="tel:03070983196"><span>Umama Ali</span><span>0307 0983196</span></a>
+        <a href="tel:03005570847"><span>Haji Aslam</span><span>0300 5570847</span></a>
+        <a href="tel:03002328686"><span>Ihsan Ali</span><span>0300 2328686</span></a>
+      </div>
     </div>
     <div class="tagline rv">#TaibaWedsUsama</div>
     <a class="top cap" href="#top">Back to the top</a>
-    <p class="note">Names, venues and phone numbers on this invitation are samples.</p>
+    
   </div>
 </footer>
 
@@ -457,16 +477,16 @@ twinkle(document.getElementById('ra'),14,60,'#ffe29a');
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv,.fn').forEach(e=>io.observe(e));
-const FAV=[['#22102a','#b0102a','#e6b85c'],['#ffdf6e','#1c6b34','#d6336c'],['#5c0b18','#e6b85c','#fff0b8'],['#e6f2ed','#0e6b5e','#c9857a'],['#22102a','#b0102a','#e6b85c']];
+const FAV=[['#22102a','#b0102a','#e6b85c'],['#0f4a35','#e8c872','#b0102a'],['#5c0b18','#e6b85c','#fff0b8'],['#0a2230','#e9cf9a','#e0a39a'],['#22102a','#b0102a','#e6b85c']];
 // favicon: a kulla (groom's turban cap with fan), recoloured per page theme
 const fav=i=>{const[b,c,a]=FAV[i];document.getElementById('fav').href='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${b}"/><path d="M30 24L38 6L58 10L56 30Z" fill="${a}"/><path d="M33 22L42 8M38 24L47 9M43 26L53 11M48 27L57 14" stroke="${b}" stroke-width="1.6" opacity=".55"/><path d="M13 52V31Q13 22 27 22H35Q49 22 49 31V52Z" fill="${c}"/><rect x="13" y="42" width="36" height="10" fill="${a}"/><circle cx="31" cy="18" r="3.5" fill="${a}"/><circle cx="22" cy="47" r="2" fill="${c}"/><circle cx="31" cy="47" r="2" fill="${c}"/><circle cx="40" cy="47" r="2" fill="${c}"/></svg>`)};fav(0);
 const ids=['top','mehndi','baraat','walima','rsvp'],dots=[...document.querySelectorAll('.dots a')];
-const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4));window.curPage=j}}),{threshold:.5});
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const j=ids.indexOf(e.target.id);dots.forEach((d,i)=>d.classList.toggle('on',i===j));window.setPal&&setPal(Math.min(j,4));fav(Math.min(j,4));window.curPage=j;window.musicGate&&musicGate()}}),{threshold:.5});
 ids.forEach(i=>so.observe(document.getElementById(i)));
 
 // a little glitter over every page
 (()=>{const g=document.getElementById('glit'),r=(a,b)=>a+Math.random()*(b-a),place=t=>{t.style.left=r(3,97)+'%';t.style.top=r(3,97)+'%'};
-for(let i=0;i<(innerWidth<600?14:22);i++){const t=document.createElement('i');t.className='tw';t.style.cssText=`--s:${r(5,11)}px;--t:${r(2.6,5)}s;--dl:${-r(0,5)}s;--c:${Math.random()<.5?'#ffe08a':'#e3a92f'}`;place(t);t.addEventListener('animationiteration',()=>place(t));g.append(t)}})();
+for(let i=0;i<(innerWidth<600?10:16);i++){const t=document.createElement('i');t.className='tw';t.style.cssText=`--s:${r(5,11)}px;--t:${r(2.6,5)}s;--dl:${-r(0,5)}s;--c:${Math.random()<.5?'#ffe08a':'#e3a92f'}`;place(t);t.addEventListener('animationiteration',()=>place(t));g.append(t)}})();
 
 // Original Bollywood-wedding style instrumentals, synthesised live: dholki/dhol grooves, sitar plucks, shehnai, pads. One mood per page.
 (()=>{const btn=document.getElementById('snd'),lab=document.getElementById('snd-t'),AC=window.AudioContext||window.webkitAudioContext;if(!AC){btn.hidden=true;return}
@@ -487,14 +507,20 @@ function sched(){const T=TH[th],sd=60/T.bpm/4;while(next<ctx.currentTime+.15){co
  if(d>=0)T.sh?shehnai(next,fr(T,d+7),sd*2.2,.22):pluck(next,fr(T,d+7),.28);
  if(s===0&&bar===0&&T.pad)pad(next,[fr(T,0),fr(T,4),fr(T,7)],sd*32,T.pad);
  next+=sd;step++}}
-const idx=()=>0;
-btn.onclick=()=>{if(!on){if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=0;const c=ctx.createDynamicsCompressor();master.connect(c).connect(ctx.destination);
+// The opening page (Quranic verse) stays silent: music plays only from page two on, and the button is hidden on page one
+const allowed=()=>(window.curPage|0)!==0;let want=false;
+function apply(){const ok=want&&allowed()&&ctx;btn.hidden=!allowed();
+ if(ok&&!timer){th=0;step=0;next=ctx.currentTime+.05;timer=setInterval(sched,40);master.gain.setTargetAtTime(.3,ctx.currentTime,.4)}
+ else if(!ok&&timer){master.gain.setTargetAtTime(0,ctx.currentTime,.1);const t=timer;timer=null;setTimeout(()=>{if(!timer)clearInterval(t)},500)}
+ btn.setAttribute('aria-pressed',want);lab.textContent=want?'Music on':'Tap for music'}
+window.musicUnlock=()=>{want=true;if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=0;const c=ctx.createDynamicsCompressor();master.connect(c).connect(ctx.destination);
   noise=ctx.createBuffer(1,ctx.sampleRate*.3,ctx.sampleRate);const n=noise.getChannelData(0);for(let i=0;i<n.length;i++)n[i]=Math.random()*2-1}
-  ctx.resume();th=idx();step=0;next=ctx.currentTime+.05;timer=setInterval(sched,40);master.gain.setTargetAtTime(.3,ctx.currentTime,.4);on=true}
- else{master.gain.setTargetAtTime(0,ctx.currentTime,.1);on=false;setTimeout(()=>{if(!on)clearInterval(timer)},500)}
- btn.setAttribute('aria-pressed',on);lab.textContent=on?'Music on':'Tap for music'};
-document.addEventListener('visibilitychange',()=>{if(ctx&&on)document.hidden?ctx.suspend():ctx.resume()});
+ ctx.resume();apply()};
+window.musicGate=apply;
+btn.onclick=()=>{if(!ctx){window.musicUnlock();return}want=!want;if(want)ctx.resume();apply()};
+document.addEventListener('visibilitychange',()=>{if(ctx&&want)document.hidden?ctx.suspend():ctx.resume()});
 })();
+
 
 // one gesture = one page: wheel, swipe and keys move exactly one screen
 (()=>{const S=['top','mehndi','baraat','walima','rsvp'].map(i=>document.getElementById(i));let lock=false;
@@ -512,11 +538,11 @@ addEventListener('keydown',e=>{if(!live())return;const k={ArrowDown:1,PageDown:1
 const gate=document.getElementById('gate');
 const root=document.documentElement,unlock=()=>{root.classList.add('opened');root.style.overflow='';gate.remove()};
 root.style.overflow='hidden';
-function openGate(){if(gate.classList.contains('open'))return;gate.classList.add('open');const b=document.getElementById('snd');if(b.getAttribute('aria-pressed')!=='true')b.click();
+function openGate(){if(gate.classList.contains('open'))return;gate.classList.add('open');window.musicUnlock&&musicUnlock();
  setTimeout(()=>gate.classList.add('go'),3300);setTimeout(()=>root.classList.add('opened'),3500);setTimeout(unlock,4800)}
 const sealEl=gate.querySelector('.seal');sealEl.onclick=openGate;sealEl.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGate()}};
 
-const T=new Date(2026,11,8,19,0,0);
+const T=new Date(2026,11,8,18,0,0);
 const z=n=>String(n).padStart(2,'0');
 function tick(){let s=Math.max(0,Math.floor((T-Date.now())/1000));
   [['d',86400],['h',3600],['m',60],['s',1]].forEach(([k,u])=>{document.getElementById('cd-'+k).textContent=z(Math.floor(s/u));s%=u})}
