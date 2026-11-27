@@ -539,7 +539,7 @@ for(let i=0;i<(innerWidth<600?10:16);i++){const t=document.createElement('i');t.
 (()=>{const btn=document.getElementById('snd'),lab=document.getElementById('snd-t'),AC=window.AudioContext||window.webkitAudioContext;if(!AC){btn.hidden=true;return}
 let ctx,master,noise,timer,step=0,next=0,th=0,on=false;
 const SC={y:[0,2,4,6,7,9,11],k:[0,2,3,5,7,9,10],b:[0,2,4,5,7,9,11]};
-const TH=[{bpm:80,root:146.83,sc:SC.y,drum:'D.......t.......',mel:[[0,-1,-1,-1,2,-1,4,-1,5,-1,-1,-1,4,-1,2,-1],[7,-1,-1,-1,6,-1,4,-1,2,-1,-1,-1,0,-1,-1,-1]],pad:.06,dg:.35}];
+const TH=[{bpm:60,root:146.83,sc:SC.y,mel:[[0,-1,-1,-1,2,-1,-1,-1,4,-1,-1,-1,2,-1,-1,-1],[5,-1,-1,-1,4,-1,-1,-1,2,-1,-1,-1,0,-1,-1,-1]],chords:[[0,4,7],[5,9,12]],pad:.08}];
 const fr=(T,d)=>{const n=T.sc.length;return T.root*2**((T.sc[((d%n)+n)%n]+12*Math.floor(d/n))/12)};
 const env=(g,t,a,d,pk)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)};
 const osc=(type,f,t,dur,dest,det=0)=>{const o=ctx.createOscillator();o.type=type;o.frequency.value=f;o.detune.value=det;o.connect(dest);o.start(t);o.stop(t+dur);return o};
@@ -549,15 +549,16 @@ function pluck(t,f,g){const a=ctx.createGain(),lp=ctx.createBiquadFilter();lp.ty
 function shehnai(t,f,d,g){const a=ctx.createGain(),bp=ctx.createBiquadFilter(),l=ctx.createOscillator(),lg=ctx.createGain();bp.type='bandpass';bp.frequency.value=f*3;bp.Q.value=3;l.frequency.value=5.5;lg.gain.value=f*.012;
  const o=osc('sawtooth',f,t,d+.1,bp);l.connect(lg).connect(o.frequency);l.start(t);l.stop(t+d+.1);a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+.06);a.gain.exponentialRampToValueAtTime(.0001,t+d);bp.connect(a).connect(master)}
 function pad(t,fs,d,g){const lp=ctx.createBiquadFilter(),a=ctx.createGain();lp.type='lowpass';lp.frequency.value=900;a.gain.setValueAtTime(0,t);a.gain.linearRampToValueAtTime(g,t+1.2);a.gain.linearRampToValueAtTime(0,t+d);fs.forEach(f=>osc('triangle',f,t,d,lp));lp.connect(a).connect(master)}
-function sched(){const T=TH[th],sd=60/T.bpm/4;while(next<ctx.currentTime+.15){const s=step%16,bar=Math.floor(step/16)%2,k=T.drum[s],d=T.mel[bar][s];
- if(k!=='.')drum(next,k,T.dg);
- if(d>=0)T.sh?shehnai(next,fr(T,d+7),sd*2.2,.22):pluck(next,fr(T,d+7),.28);
- if(s===0&&bar===0&&T.pad)pad(next,[fr(T,0),fr(T,4),fr(T,7)],sd*32,T.pad);
+// soft piano-like notes over a warm pad: no drums
+function soft(t,f,g){const a=ctx.createGain(),lp=ctx.createBiquadFilter(),h=ctx.createGain();lp.type='lowpass';lp.frequency.value=2200;h.gain.value=.25;env(a,t,.02,2.4,g);osc('sine',f,t,2.6,lp);osc('triangle',f*2,t,2.6,h);h.connect(lp);lp.connect(a).connect(master)}
+function sched(){const T=TH[th],sd=60/T.bpm/4;while(next<ctx.currentTime+.15){const s=step%16,bar=Math.floor(step/16)%2,d=T.mel[bar][s];
+ if(d>=0)soft(next,fr(T,d+7),.2);
+ if(s===0&&bar===0)pad(next,T.chords[Math.floor(step/32)%2].map(x=>fr(T,x)),sd*32,T.pad);
  next+=sd;step++}}
 // The opening page (Quranic verse) stays silent: music plays only from page two on, and the button is hidden on page one
 const allowed=()=>(window.curPage|0)!==0;let want=false;
 function apply(){const ok=want&&allowed()&&ctx;btn.hidden=!allowed();
- if(ok&&!timer){th=0;step=0;next=ctx.currentTime+.05;timer=setInterval(sched,40);master.gain.setTargetAtTime(.3,ctx.currentTime,.4)}
+ if(ok&&!timer){th=0;step=0;next=ctx.currentTime+.05;timer=setInterval(sched,40);master.gain.setTargetAtTime(.24,ctx.currentTime,.6)}
  else if(!ok&&timer){master.gain.setTargetAtTime(0,ctx.currentTime,.1);const t=timer;timer=null;setTimeout(()=>{if(!timer)clearInterval(t)},500)}
  btn.setAttribute('aria-pressed',want);lab.textContent=want?'Music on':'Tap for music'}
 window.musicUnlock=()=>{want=true;if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=0;const c=ctx.createDynamicsCompressor();master.connect(c).connect(ctx.destination);
