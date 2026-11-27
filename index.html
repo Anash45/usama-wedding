@@ -120,8 +120,8 @@ html:not(.opened) .hero *{animation-play-state:paused}
   background:linear-gradient(180deg,var(--bg2),var(--bg))}
 .fn::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;z-index:3;
   background:radial-gradient(circle at 20px 0,var(--prev) 19px,transparent 20px) 0 0/40px 22px repeat-x}
-.fn::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--jo,.35);
-  background:radial-gradient(circle,var(--accent) 1.2px,transparent 1.6px) 0 0/30px 30px;mix-blend-mode:soft-light}
+.fn::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2764%27%20height=%2764%27%20viewBox=%270%200%2064%2064%27%3E%3Cg%20fill=%27none%27%20stroke=%27%23e8c872%27%20stroke-width=%271%27%3E%3Cpath%20d=%27M32%204L40%2024L60%2032L40%2040L32%2060L24%2040L4%2032L24%2024Z%27/%3E%3Ccircle%20cx=%2732%27%20cy=%2732%27%20r=%275%27/%3E%3Cpath%20d=%27M0%200L8%208M64%200L56%208M0%2064L8%2056M64%2064L56%2056%27/%3E%3C/g%3E%3C/svg%3E") 0 0/64px 64px;opacity:.1}
 .mehndi{--bg:#0d3f2e;--bg2:#17674b;--ink:#f7ecd0;--accent:#e8c872;--accent2:#f2c6a0;--line:rgba(232,200,114,.4);--card:rgba(0,0,0,.24);--petal:#e8c872;--prev:#22102a;--henna:#6a3418}
 .baraat{--bg:#4a0a15;--bg2:#7a1124;--ink:#fbe9c9;--accent:#e6b85c;--accent2:#ff9aa2;--line:rgba(230,184,92,.4);--card:rgba(0,0,0,.24);--petal:#e6b85c;--prev:#0d3f2e;--jo:.25}
 .walima{--bg:#081c29;--bg2:#12394a;--ink:#f3ecdc;--accent:#e9cf9a;--accent2:#eab0a4;--line:rgba(233,207,154,.4);--card:rgba(0,0,0,.26);--petal:#e7a4a0;--prev:#4a0a15}
@@ -189,7 +189,7 @@ html:not(.opened) .hero *{animation-play-state:paused}
 /* ---------- finale ---------- */
 .fin{position:relative;overflow:hidden;text-align:center;padding-block:clamp(90px,11vw,130px) 56px;background:radial-gradient(100% 80% at 50% 0,#4a1f55,var(--plum) 70%)}
 .fin::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;background:radial-gradient(circle at 20px 0,#081c29 19px,transparent 20px) 0 0/40px 22px repeat-x}
-.fin>div{position:relative;z-index:2;max-width:620px;margin-inline:auto}
+.fin>div:not(.rays):not(.frm){position:relative;z-index:2;max-width:620px;margin-inline:auto}
 .fin h2{font:clamp(54px,12vw,96px)/1.1 var(--script);margin:0 0 12px;color:var(--gold-hi)}
 .fin p{margin:0 0 18px}
 .rsvp{display:grid;gap:12px;margin:28px 0;padding:22px;border:1px solid rgba(230,184,92,.4);border-radius:6px 6px 28px 6px;background:rgba(0,0,0,.2)}
@@ -275,17 +275,43 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
 @keyframes glint{0%,100%{opacity:.55}50%{opacity:1}}
 .fin .sm{margin:0 0 10px;font-size:.95em}
 @media(max-width:819px) and (max-height:620px){.fin .sm,.fin .tagline,.fin .top{display:none}.fin .cd{margin:2px 0 8px}.chip{padding:6px 2px}.arch{width:min(100%,calc(24vh*.8));width:min(100%,calc(24dvh*.8))}.date .n{font-size:40px}.date{margin-bottom:4px}h2,.fn h2{font-size:52px}.fn{padding-block:30px 10px}.bismillah{font-size:20px;padding-top:70px}}
+
+/* richer finish: foil frames, jali, medallion, rays, ornaments */
+.rays{position:absolute;left:50%;top:50%;width:130vmax;height:130vmax;margin:-65vmax 0 0 -65vmax;pointer-events:none;z-index:0;
+  background:repeating-conic-gradient(rgba(232,200,114,.075) 0 4deg,transparent 4deg 9deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 42%);mask:radial-gradient(circle,#000 0,transparent 42%);animation:rot 200s linear infinite}
+.medal{position:absolute;left:50%;top:52%;width:min(150vw,860px);margin:calc(min(150vw,860px)/-2) 0 0 calc(min(150vw,860px)/-2);pointer-events:none;z-index:0;opacity:.2;animation:rot 240s linear infinite reverse}
+.medal svg{display:block;width:100%;fill:none;stroke:#e8c872;stroke-width:.7}
+.lan.c{left:14%;width:clamp(34px,5.5vw,56px);animation-delay:-1s;top:-6px}.lan.d{right:14%;width:clamp(34px,5.5vw,56px);animation-delay:-3s;top:-6px}
+.frm{position:absolute;inset:12px;color:var(--accent,var(--gold));pointer-events:none;z-index:4}
+.fn .frm,.fin .frm{top:30px}
+.frm::before,.frm::after{content:"";position:absolute;border:1px solid currentColor}
+.frm::before{inset:0;opacity:.55}.frm::after{inset:5px;opacity:.28}
+.frm svg{position:absolute;width:clamp(44px,13vw,84px);height:clamp(44px,13vw,84px);overflow:visible}
+.frm .tl{left:-3px;top:-3px}.frm .tr{right:-3px;top:-3px;transform:scaleX(-1)}.frm .bl{left:-3px;bottom:-3px;transform:scaleY(-1)}.frm .br{right:-3px;bottom:-3px;transform:scale(-1,-1)}
+.orn{display:block;width:150px;height:15px;color:var(--accent,var(--gold));margin:0 0 6px}
+.end .orn,.fin .orn{margin-inline:auto}
+@media(max-width:819px){.txt .orn{margin-inline:auto;height:12px;width:120px;margin-bottom:2px}.arch{width:min(100%,430px,calc(37vh*.8));width:min(100%,430px,calc(37dvh*.8))}}
+.date .n{background:linear-gradient(100deg,#b88a24 20%,#fff0b8 45%,#b88a24 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.map{border:1px solid currentColor;border-radius:20px;padding:2px 11px;text-decoration:none;margin-right:6px;font-size:10px;transition:background .3s,color .3s}
+.map:hover{background:var(--accent);color:var(--bg)}
+.arch{margin-bottom:14px;box-shadow:inset 0 0 0 9px var(--ring),inset 0 0 0 11px var(--ring2),inset 0 0 40px rgba(0,0,0,.35),0 0 0 6px var(--bg),0 0 0 8px var(--accent),0 0 0 14px var(--bg),0 0 0 15px rgba(255,255,255,.14),0 40px 70px -24px rgba(0,0,0,.65)}
+@media(max-width:819px) and (max-height:720px){.txt .orn{display:none}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="cnr" viewBox="0 0 100 100"><path d="M2 2H72M2 2V72" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M10 10H48M10 10V48" fill="none" stroke="currentColor" stroke-width="1"/><path d="M10 58C10 30 30 10 58 10" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M20 20C38 20 50 28 54 44C46 38 36 38 30 46C28 34 22 28 20 20Z" fill="currentColor"/><circle cx="76" cy="2" r="2.6" fill="currentColor"/><circle cx="2" cy="76" r="2.6" fill="currentColor"/><circle cx="18" cy="18" r="3" fill="currentColor"/><path d="M60 24l4 4-4 4-4-4zM24 60l4 4-4 4-4-4z" fill="currentColor"/></symbol>
+<symbol id="orn" viewBox="0 0 200 20"><path d="M0 10H74M126 10H200" stroke="currentColor" stroke-width="1" fill="none"/><path d="M100 2l8 8-8 8-8-8z" fill="currentColor"/><circle cx="82" cy="10" r="2" fill="currentColor"/><circle cx="118" cy="10" r="2" fill="currentColor"/><path d="M58 10c6-7 12-7 18 0M124 10c6-7 12-7 18 0" fill="none" stroke="currentColor"/></symbol>
+<pattern id="brc" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M12 2l6 10-6 10-6-10z" fill="none" stroke="rgba(201,162,39,.4)"/><circle cx="12" cy="12" r="1.4" fill="rgba(201,162,39,.4)"/></pattern>
+</defs></svg>
 
 <div class="gate" id="gate">
   <div class="t cap">You are invited</div>
   <div class="env">
-    <svg class="back" viewBox="0 0 300 200" aria-hidden="true"><rect width="300" height="200" rx="5" fill="#8a1425"/><rect x="5" y="5" width="290" height="190" rx="3" fill="none" stroke="rgba(230,184,92,.55)"/></svg>
+    <svg class="back" viewBox="0 0 300 200" aria-hidden="true"><rect width="300" height="200" rx="5" fill="#8a1425"/><rect width="300" height="200" rx="5" fill="url(#brc)"/><rect x="5" y="5" width="290" height="190" rx="3" fill="none" stroke="rgba(230,184,92,.55)"/></svg>
     <div class="card"><span class="c1">Wedding invitation</span><span class="c2">Usama &amp; Taiba</span><span class="c3">8 &middot; 10 &middot; 11 December 2026</span></div>
     <svg class="pocket" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0L150 112L300 0V200H0Z" fill="#a41c30"/><path d="M0 200L120 98M300 200L180 98" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/><path d="M0 0L150 112L300 0" fill="none" stroke="rgba(230,184,92,.7)" stroke-width="1.6"/><path d="M1 0V199H299V0" fill="none" stroke="rgba(230,184,92,.5)"/></svg>
-    <div class="flap"><svg class="f" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#b8263c" stroke="rgba(230,184,92,.8)" stroke-width="1.6"/><path d="M26 6L150 106L274 6" fill="none" stroke="rgba(230,184,92,.35)" stroke-dasharray="2 4"/></svg><svg class="b" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#6e0b19" stroke="rgba(230,184,92,.6)" stroke-width="1.6"/></svg></div>
+    <div class="flap"><svg class="f" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#b8263c" stroke="rgba(230,184,92,.8)" stroke-width="1.6"/><path d="M26 6L150 106L274 6" fill="none" stroke="rgba(230,184,92,.35)" stroke-dasharray="2 4"/></svg><svg class="b" viewBox="0 0 300 200" aria-hidden="true"><path d="M0 0H300L150 118Z" fill="#6e0b19" stroke="rgba(230,184,92,.6)" stroke-width="1.6"/><path d="M0 0H300L150 118Z" fill="url(#brc)" stroke="rgba(230,184,92,.6)" stroke-width="1.6"/></svg></div>
     <div class="seal" role="button" tabindex="0" aria-label="Open the invitation">U&amp;T</div>
   </div>
   <div class="t h cap">Tap the seal to open</div>
@@ -295,6 +321,10 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
   <div class="garw"><svg id="gh" aria-hidden="true"></svg></div>
   <div class="lan a" data-p="lantern"></div>
   <div class="lan b" data-p="lantern"></div>
+  <div class="lan c" data-p="lantern"></div>
+  <div class="lan d" data-p="lantern"></div>
+  <div class="rays" aria-hidden="true"></div>
+  <div class="medal" aria-hidden="true"><svg id="med" viewBox="0 0 400 400"></svg></div>
   <p class="bismillah" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
   <div class="stage">
     <svg class="arch-l" viewBox="0 0 400 620" aria-hidden="true">
@@ -418,6 +448,7 @@ html{overscroll-behavior:none;scroll-snap-type:y mandatory;background:var(--plum
 </section>
 
 <footer class="fin g" id="rsvp">
+  <div class="rays" aria-hidden="true"></div>
   <div>
     <div class="cap rv" style="color:var(--gold)">With duas and love</div>
     <h2 class="rv">Join us</h2>
@@ -536,6 +567,14 @@ document.addEventListener('visibilitychange',()=>{if(ctx&&want)document.hidden?c
 })();
 
 
+
+// foil frame + corner flourishes on every page, divider ornament under titles
+document.querySelectorAll('.hero,.fn,.fin').forEach(p=>{const f=document.createElement('div');f.className='frm';f.setAttribute('aria-hidden','true');f.innerHTML=['tl','tr','bl','br'].map(c=>`<svg class="${c}" viewBox="0 0 100 100"><use href="#cnr"/></svg>`).join('');p.append(f)});
+document.querySelectorAll('.fn h2,.fin h2').forEach(h=>h.insertAdjacentHTML('afterend','<svg class="orn" viewBox="0 0 200 20" aria-hidden="true"><use href="#orn"/></svg>'));
+(()=>{let s='';const ring=r=>`<circle cx="200" cy="200" r="${r}"/>`,pet=(n,r0,r1,w)=>{for(let i=0;i<n;i++){const m=(r0+r1)/2;s+=`<path transform="rotate(${i*360/n} 200 200)" d="M200 ${200-r0}Q${200+w} ${200-m} 200 ${200-r1}Q${200-w} ${200-m} 200 ${200-r0}Z"/>`}};
+ s+=ring(196)+ring(190);pet(36,150,188,10);s+=ring(148);pet(24,104,146,20);s+=ring(102);pet(16,60,100,22);s+=ring(56);pet(12,14,54,14);
+ for(let i=0;i<72;i++){const a=i*5*Math.PI/180;s+=`<circle cx="${200+170*Math.sin(a)}" cy="${200-170*Math.cos(a)}" r="1.4"/>`}
+ document.getElementById('med').innerHTML=s})();
 // one gesture = one page: wheel, swipe and keys move exactly one screen
 (()=>{const S=['top','mehndi','baraat','walima','rsvp'].map(i=>document.getElementById(i));let lock=false;
 const cur=()=>S.findIndex(e=>{const r=e.getBoundingClientRect();return r.top<=innerHeight/2&&r.bottom>innerHeight/2});
